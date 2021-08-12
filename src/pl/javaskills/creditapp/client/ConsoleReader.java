@@ -20,6 +20,23 @@ public class ConsoleReader {
         String mothersMaidenName = in.next();
         System.out.println();
 
-        return new Person(name, lastName, mothersMaidenName);
+        System.out.println("Enter total monthly income in PLN: ");
+        double totalMonthlyIncomePLN = in.nextDouble();
+        System.out.println();
+
+        System.out.println("Are you married: ");
+        boolean married = in.nextBoolean();
+        System.out.println();
+
+        System.out.println("Enter number of family dependants (including applicant):");
+        int numOfFamilyDependants = in.nextInt();
+        System.out.println();
+
+        Person person = new Person(name, lastName, mothersMaidenName);
+        person.setTotalMonthlyIncomePLN(totalMonthlyIncomePLN);
+        person.setMarried(married);
+        person.setNumOfFamilyDependants(numOfFamilyDependants);
+
+        return person;
     }
 }
