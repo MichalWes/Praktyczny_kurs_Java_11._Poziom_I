@@ -1,8 +1,13 @@
 public class Car {
-    private String brand;
-    private int prodDate;
+    private final String brand;
+    private final int prodDate;
     private double mileage;
     private Person owner;
+
+    public Car(String brand, int prodDate) {
+        this.brand = brand;
+        this.prodDate = prodDate;
+    }
 
     public Person getOwner() {
         return owner;
@@ -26,16 +31,8 @@ public class Car {
         return brand;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
     public int getProdDate() {
         return prodDate;
-    }
-
-    public void setProdDate(int prodDate) {
-        this.prodDate = prodDate;
     }
 
     public double getMileage() {

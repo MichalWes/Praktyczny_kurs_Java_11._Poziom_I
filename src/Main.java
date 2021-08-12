@@ -4,14 +4,9 @@ public class Main {
         Person person = new Person("Jane");
         person.setAge(18);
 
-        Car car = new Car();
-        car.setProdDate(2020);
-        car.setBrand("Opel Vivaro");
+        Car car = new Car("Opel Vivaro", 2020);
         car.setMileage(1000);
         car.setOwner(person);
-
-
-
         System.out.println(car);
 
     }
