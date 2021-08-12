@@ -1,8 +1,7 @@
 public class Main {
 
     public static void main(String[] args) {
-        Person person = new Person();
-        person.setName("John");
+        Person person = new Person("Jane");
         person.setAge(18);
 
         Car car = new Car();

@@ -1,9 +1,9 @@
 public class Person {
-    private String name;
+    private final String name;
     private int age;
 
-    public Person(){
-
+    public Person(String name){
+        this.name = name;
     }
 
     public String toString(){
@@ -16,10 +16,6 @@ public class Person {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String newName) {
-        name = newName;
     }
 
     public int getAge() {
