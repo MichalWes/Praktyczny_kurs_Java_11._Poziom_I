@@ -1,6 +1,6 @@
 package pl.javaskills.creditapp.client;
 
-import pl.javaskills.creditapp.core.*;
+import pl.javaskills.creditapp.core.model.*;
 
 import java.util.Scanner;
 
@@ -21,11 +21,11 @@ public class ConsoleReader {
         System.out.println();
 
         System.out.println("What is your marital status? (SINGLE, MARRIED, DIVORCED, WIDOWED, SEPARATED): ");
-        String maritalStatus = in.next();
+        String maritalStatus = in.next().toUpperCase();
         System.out.println();
 
         System.out.println("What is your education level? (NONE, PRIMARY, MIDDLE, SECONDARY, POST_SECONDARY, TERTIARY): ");
-        String education = in.next();
+        String education = in.next().toUpperCase();
         System.out.println();
 
         System.out.println("Enter your phone number: ");

@@ -2,7 +2,7 @@ package pl.javaskills.creditapp;
 
 import  pl.javaskills.creditapp.client.ConsoleReader;
 import pl.javaskills.creditapp.core.CreditApplicationService;
-import  pl.javaskills.creditapp.core.Person;
+import pl.javaskills.creditapp.core.model.Person;
 
 public class Main {
 
