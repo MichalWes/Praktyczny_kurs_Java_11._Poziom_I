@@ -1,6 +1,6 @@
 package pl.javaskills.creditapp.client;
 
-import pl.javaskills.creditapp.core.Person;
+import pl.javaskills.creditapp.core.*;
 
 import java.util.Scanner;
 
@@ -20,23 +20,41 @@ public class ConsoleReader {
         String mothersMaidenName = in.next();
         System.out.println();
 
-        System.out.println("Enter total monthly income in PLN: ");
-        double totalMonthlyIncomePLN = in.nextDouble();
+        System.out.println("What is your marital status? (SINGLE, MARRIED, DIVORCED, WIDOWED, SEPARATED): ");
+        String maritalStatus = in.next();
         System.out.println();
 
-        System.out.println("Are you married: ");
-        boolean married = in.nextBoolean();
+        System.out.println("What is your education level? (NONE, PRIMARY, MIDDLE, SECONDARY, POST_SECONDARY, TERTIARY): ");
+        String education = in.next();
+        System.out.println();
+
+        System.out.println("Enter your phone number: ");
+        String phoneNumber = in.next();
+        System.out.println();
+
+        System.out.println("Enter your email: ");
+        String email = in.next();
+        System.out.println();
+
+
+        System.out.println("Enter total monthly income in PLN: ");
+        double totalMonthlyIncomePLN = in.nextDouble();
         System.out.println();
 
         System.out.println("Enter number of family dependants (including applicant):");
         int numOfFamilyDependants = in.nextInt();
         System.out.println();
 
-        Person person = new Person(name, lastName, mothersMaidenName);
-        person.setTotalMonthlyIncomePLN(totalMonthlyIncomePLN);
-        person.setMarried(married);
-        person.setNumOfFamilyDependants(numOfFamilyDependants);
+        PersonalData personalData = new PersonalData(name, lastName, mothersMaidenName);
+        personalData.setMaritalStatus(MaritalStatus.valueOf(maritalStatus));
+        personalData.setEducation(Education.valueOf(education));
+        personalData.setTotalMonthlyIncomePLN(totalMonthlyIncomePLN);
+        personalData.setNumOfFamilyDependants(numOfFamilyDependants);
 
-        return person;
+        ContactData contactData = new ContactData();
+        contactData.setPhoneNumber(phoneNumber);
+        contactData.setEmail(email);
+
+        return new Person(personalData, contactData);
     }
 }

@@ -8,8 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         Person person = new ConsoleReader().readInputParameters();
-        System.out.println("Hello, " + person.getName() + " " + person.getLastName() + "!");
-        String decision = new CreditApplicationService().getDecision(person);
-        System.out.println(decision);
+        System.out.println("Hello, " + person.getPersonalData().getName() + " " + person.getPersonalData().getLastName() + "!");
+        System.out.println(new CreditApplicationService().getDecision(person));
     }
 }
