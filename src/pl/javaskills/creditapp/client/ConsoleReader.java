@@ -36,13 +36,20 @@ public class ConsoleReader {
         String email = in.next();
         System.out.println();
 
-
         System.out.println("Enter total monthly income in PLN: ");
         double totalMonthlyIncomePLN = in.nextDouble();
         System.out.println();
 
         System.out.println("Enter number of family dependants (including applicant):");
         int numOfFamilyDependants = in.nextInt();
+        System.out.println();
+
+        System.out.println("What is purpose of loan? (MORTGAGE | PERSONAL_LOAN): ");
+        String type = in.next().toUpperCase();
+        System.out.println();
+
+        System.out.println("Enter loan amount: ");
+        double amount = in.nextDouble();
         System.out.println();
 
         PersonalData personalData = new PersonalData(name, lastName, mothersMaidenName);
@@ -55,6 +62,10 @@ public class ConsoleReader {
         contactData.setPhoneNumber(phoneNumber);
         contactData.setEmail(email);
 
-        return new Person(personalData, contactData);
+        PurposeOfLoan purposeOfLoan = new PurposeOfLoan();
+        purposeOfLoan.setType(Type.valueOf(type));
+        purposeOfLoan.setAmount(amount);
+
+        return new Person(personalData, contactData, purposeOfLoan);
     }
 }

@@ -1,7 +1,5 @@
 package pl.javaskills.creditapp.core;
 
-import pl.javaskills.creditapp.core.model.Education;
-import pl.javaskills.creditapp.core.model.MaritalStatus;
 import pl.javaskills.creditapp.core.model.Person;
 
 public class PersonScoringCalculator {
