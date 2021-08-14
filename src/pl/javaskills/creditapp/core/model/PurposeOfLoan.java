@@ -3,6 +3,7 @@ package pl.javaskills.creditapp.core.model;
 public class PurposeOfLoan {
     private Type type;
     private double amount;
+    private byte period;
 
     public Type getType() {
         return type;
@@ -18,6 +19,14 @@ public class PurposeOfLoan {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public byte getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(byte period) {
+        this.period = period;
     }
 }
 
