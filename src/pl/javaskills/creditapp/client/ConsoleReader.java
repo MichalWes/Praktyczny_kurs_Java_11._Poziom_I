@@ -21,7 +21,7 @@ public class ConsoleReader {
         System.out.println();
 
         System.out.println("What is your marital status? (SINGLE, MARRIED, DIVORCED, WIDOWED, SEPARATED): ");
-        String maritalStatus = in.next().toUpperCase();
+        MaritalStatus maritalStatus = MaritalStatus.valueOf(in.next().toUpperCase());
         System.out.println();
 
         System.out.println("What is your education level? (NONE, PRIMARY, MIDDLE, SECONDARY, POST_SECONDARY, TERTIARY): ");
@@ -57,7 +57,7 @@ public class ConsoleReader {
         System.out.println();
 
         PersonalData personalData = new PersonalData(name, lastName, mothersMaidenName);
-        personalData.setMaritalStatus(MaritalStatus.valueOf(maritalStatus));
+        personalData.setMaritalStatus(maritalStatus);
         personalData.setEducation(Education.valueOf(education));
         personalData.setTotalMonthlyIncomePLN(totalMonthlyIncomePLN);
         personalData.setNumOfFamilyDependants(numOfFamilyDependants);
@@ -71,8 +71,6 @@ public class ConsoleReader {
         purposeOfLoan.setAmount(amount);
         purposeOfLoan.setPeriod(period);
 
-        Person person = new Person(personalData, contactData);
-
-        return new LoanApplication(person, purposeOfLoan);
+        return new LoanApplication(new Person(personalData, contactData), purposeOfLoan);
     }
 }

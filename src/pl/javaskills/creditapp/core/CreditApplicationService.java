@@ -2,48 +2,34 @@ package pl.javaskills.creditapp.core;
 
 import pl.javaskills.creditapp.core.model.LoanApplication;
 
+import static pl.javaskills.creditapp.core.Constants.MORTGAGE_LOAN_RATE;
+import static pl.javaskills.creditapp.core.Constants.PERSONAL_LOAN_LOAN_RATE;
+
 public class CreditApplicationService {
     public String getDecision(LoanApplication loanApplication){
         int score = new PersonScoringCalculator().calculate(loanApplication.getPerson());
-        double earningpp = loanApplication.getPerson().getPersonalData().getTotalMonthlyIncomePLN()/loanApplication.getPerson().getPersonalData().getNumOfFamilyDependants();
-        double creditRating = loanApplication.getPurposeOfLoan().getType().getRate() * earningpp * 12 * loanApplication.getPurposeOfLoan().getPeriod();
+        double creditRating = loanApplication.getPerson().getIncomePerFamilyMember() * 12 * loanApplication.getPurposeOfLoan().getPeriod();
+        switch (loanApplication.getPurposeOfLoan().getType()) {
+            case PERSONAL:
+                creditRating = creditRating * PERSONAL_LOAN_LOAN_RATE;
+                break;
+            case MORTGAGE:
+                creditRating = creditRating * MORTGAGE_LOAN_RATE;
+                break;
+        }
 
-        int result = 0;
+        String decision="";
         if (score < 300){
-            result = 1;
+            decision = "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + " decision is negative.";
         }
         else if (score >= 300 && score <=400){
-            result = 2;
+            decision = "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", bank requires additional documents. Our Consultant will contact you.";
         }
         else if (score > 400 && creditRating>=loanApplication.getPurposeOfLoan().getAmount()){
-            result = 3;
+            decision = "Congratulations, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is positive.";
         }
         else if(score > 400 && creditRating<loanApplication.getPurposeOfLoan().getAmount()){
-            result = 4;
-        }
-
-
-        String decision ="";
-
-        switch (result){
-            case 1:
-                decision = "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + " decision is negative.";
-                break;
-        }
-        switch (result){
-            case 2:
-                decision = "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", bank requires additional documents. Our Consultant will contact you.";
-                break;
-        }
-        switch (result){
-            case 3:
-                decision = "Congratulations, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is positive.";
-                break;
-        }
-        switch (result){
-            case 4:
-                decision = "Sorry, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is negative. Bank can borrow only " + creditRating;
-                break;
+            decision = "Sorry, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is negative. Bank can borrow only " + creditRating;
         }
         return decision;
     }

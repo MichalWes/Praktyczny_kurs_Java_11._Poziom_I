@@ -17,4 +17,9 @@ public class Person {
     public ContactData getContactData() {
         return contactData;
     }
+
+    public double getIncomePerFamilyMember(){
+        double incomePerFamilyMember = this.getPersonalData().getTotalMonthlyIncomePLN()/this.getPersonalData().getNumOfFamilyDependants();
+        return incomePerFamilyMember;
+    }
 }
