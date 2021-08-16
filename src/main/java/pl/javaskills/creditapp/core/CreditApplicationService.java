@@ -1,12 +1,19 @@
 package pl.javaskills.creditapp.core;
 
 import pl.javaskills.creditapp.core.model.LoanApplication;
+import pl.javaskills.creditapp.core.model.Person;
 
 import java.math.BigDecimal;
 
 public class CreditApplicationService {
+    private final PersonScoringCalculator calculator;
+
+    public CreditApplicationService(PersonScoringCalculator calculator) {
+        this.calculator = calculator;
+    }
+
     public DecisionType getDecision(LoanApplication loanApplication){
-        int score = new PersonScoringCalculator().calculate(loanApplication.getPerson());
+        int score = calculator.calculate(loanApplication.getPerson());
 
         DecisionType decision;
         if (score < 300){

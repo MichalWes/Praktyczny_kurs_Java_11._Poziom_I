@@ -10,6 +10,6 @@ public class Main {
     public static void main(String[] args) {
         LoanApplication loanApplication = new ConsoleReader().readInputParameters();
         System.out.println("Hello, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + "!");
-        System.out.println(new CreditApplicationDecision().getDecision(loanApplication));
+        System.out.println(new CreditApplicationDecision().getDecisionString(loanApplication));
     }
 }
