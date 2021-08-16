@@ -2,6 +2,8 @@ package pl.javaskills.creditapp.core;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import pl.javaskills.creditapp.core.model.Education;
 import pl.javaskills.creditapp.core.model.MaritalStatus;
 import pl.javaskills.creditapp.core.model.Person;
@@ -9,6 +11,7 @@ import pl.javaskills.creditapp.core.model.PersonTestFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class PersonScoringCalculatorTest {
     private PersonScoringCalculator cut = new PersonScoringCalculator();
 

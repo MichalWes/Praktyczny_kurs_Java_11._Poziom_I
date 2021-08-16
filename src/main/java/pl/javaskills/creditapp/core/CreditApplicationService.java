@@ -5,16 +5,15 @@ import pl.javaskills.creditapp.core.model.LoanApplication;
 import java.math.BigDecimal;
 
 public class CreditApplicationService {
-    public String getDecision(LoanApplication loanApplication){
+    public DecisionType getDecision(LoanApplication loanApplication){
         int score = new PersonScoringCalculator().calculate(loanApplication.getPerson());
 
-
-        String decision="";
+        DecisionType decision;
         if (score < 300){
-            decision = "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + " decision is negative.";
+            decision = DecisionType.NEGATIVE_SCORING;
         }
         else if (score >= 300 && score <=400){
-            decision = "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", bank requires additional documents. Our Consultant will contact you.";
+            decision = DecisionType.CONTACT_REQUIRED;
         }
         else{
             double creditRating = loanApplication.getPerson().getIncomePerFamilyMember() * 12 * loanApplication.getPurposeOfLoan().getPeriod();
@@ -27,11 +26,12 @@ public class CreditApplicationService {
                     break;
             }
             if (score > 400 && creditRating>=loanApplication.getPurposeOfLoan().getAmount()){
-                decision = "Congratulations, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is positive.";
+               decision = DecisionType.POSITIVE;
             }
             else {
                 BigDecimal roundedCreditRating = new BigDecimal(creditRating).setScale(2);
-                decision = "Sorry, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is negative. Bank can borrow only " + roundedCreditRating;
+                decision = DecisionType.NEGATIVE_CREDIT_RATING;
+                decision.setCreditRating(roundedCreditRating);
             }
         }
         return decision;

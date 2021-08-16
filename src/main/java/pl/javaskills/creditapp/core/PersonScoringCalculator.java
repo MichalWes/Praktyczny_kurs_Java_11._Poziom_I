@@ -11,8 +11,6 @@ public class PersonScoringCalculator {
 
         score = score + marrScore + edScore;
 
-        System.out.println(score);
-
         return score;
     }
 }
