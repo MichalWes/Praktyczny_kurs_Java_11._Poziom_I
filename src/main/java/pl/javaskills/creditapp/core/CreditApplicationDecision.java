@@ -1,23 +1,31 @@
 package pl.javaskills.creditapp.core;
 
-import pl.javaskills.creditapp.core.model.LoanApplication;
+import pl.javaskills.creditapp.core.model.PersonalData;
 
 public class CreditApplicationDecision {
-    public String getDecisionString(LoanApplication loanApplication){
-        DecisionType decisionType = new CreditApplicationService(new PersonScoringCalculator()).getDecision(loanApplication);
+    private final DecisionType decisionType;
+    private final PersonalData personalData;
 
+    public CreditApplicationDecision(DecisionType decisionType, PersonalData personalData) {
+        this.decisionType = decisionType;
+        this.personalData = personalData;
+    }
+
+    public DecisionType getDecisionType() {
+        return decisionType;
+    }
+
+    public String getDecisionString() {
         switch (decisionType) {
             case NEGATIVE_SCORING:
-                return "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + " decision is negative.";
+                return "Sorry " + personalData.getName() + " " + personalData.getLastName() + " decision is negative.";
             case CONTACT_REQUIRED:
-                return "Sorry " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", bank requires additional documents. Our Consultant will contact you.";
+                return "Sorry " + personalData.getName() + " " + personalData.getLastName() + ", bank requires additional documents. Our Consultant will contact you.";
             case POSITIVE:
-                return "Congratulations, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is positive.";
+                return "Congratulations, " + personalData.getName() + " " + personalData.getLastName() + ", decision is positive.";
             case NEGATIVE_CREDIT_RATING:
-                return "Sorry, " + loanApplication.getPerson().getPersonalData().getName() + " " + loanApplication.getPerson().getPersonalData().getLastName() + ", decision is negative. Bank can borrow only " + decisionType.getCreditRating();
+                return "Sorry, " + personalData.getName() + " " + personalData.getLastName() + ", decision is negative. Bank can borrow only " + decisionType.getCreditRating();
         }
         return null;
     }
-
-
 }

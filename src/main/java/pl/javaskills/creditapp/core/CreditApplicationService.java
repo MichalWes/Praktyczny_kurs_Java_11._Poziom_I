@@ -1,47 +1,40 @@
 package pl.javaskills.creditapp.core;
 
 import pl.javaskills.creditapp.core.model.LoanApplication;
-import pl.javaskills.creditapp.core.model.Person;
 
 import java.math.BigDecimal;
 
 public class CreditApplicationService {
-    private final PersonScoringCalculator calculator;
+    private final PersonScoringCalculator personScoringCalculator;
+    private final CreditRatingCalculator calculator;
 
-    public CreditApplicationService(PersonScoringCalculator calculator) {
+    public CreditApplicationService(PersonScoringCalculator personScoringCalculator, CreditRatingCalculator calculator) {
+        this.personScoringCalculator = personScoringCalculator;
         this.calculator = calculator;
     }
 
-    public DecisionType getDecision(LoanApplication loanApplication){
-        int score = calculator.calculate(loanApplication.getPerson());
+    public CreditApplicationDecision getDecision(LoanApplication loanApplication){
+        int score = personScoringCalculator.calculate(loanApplication.getPerson());
 
         DecisionType decision;
         if (score < 300){
-            decision = DecisionType.NEGATIVE_SCORING;
+            return new CreditApplicationDecision(DecisionType.NEGATIVE_SCORING, loanApplication.getPerson().getPersonalData());
         }
         else if (score >= 300 && score <=400){
-            decision = DecisionType.CONTACT_REQUIRED;
+            return new CreditApplicationDecision(DecisionType.CONTACT_REQUIRED, loanApplication.getPerson().getPersonalData());
         }
         else{
-            double creditRating = loanApplication.getPerson().getIncomePerFamilyMember() * 12 * loanApplication.getPurposeOfLoan().getPeriod();
-            switch (loanApplication.getPurposeOfLoan().getType()) {
-                case PERSONAL_LOAN:
-                    creditRating = creditRating * Constants.PERSONAL_LOAN_LOAN_RATE;
-                    break;
-                case MORTGAGE:
-                    creditRating = creditRating * Constants.MORTGAGE_LOAN_RATE;
-                    break;
-            }
+            double creditRating = calculator.getCreditRating(loanApplication);
             if (score > 400 && creditRating>=loanApplication.getPurposeOfLoan().getAmount()){
-               decision = DecisionType.POSITIVE;
+                return new CreditApplicationDecision(DecisionType.POSITIVE, loanApplication.getPerson().getPersonalData());
             }
             else {
                 BigDecimal roundedCreditRating = new BigDecimal(creditRating).setScale(2);
                 decision = DecisionType.NEGATIVE_CREDIT_RATING;
                 decision.setCreditRating(roundedCreditRating);
+                return new CreditApplicationDecision(decision, loanApplication.getPerson().getPersonalData());
             }
         }
-        return decision;
-    }
 
+    }
 }

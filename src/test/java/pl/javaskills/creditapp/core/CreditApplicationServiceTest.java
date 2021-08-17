@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.javaskills.creditapp.core.model.*;
 
@@ -15,11 +16,8 @@ import static pl.javaskills.creditapp.core.DecisionType.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreditApplicationServiceTest {
-    @InjectMocks
-    private CreditApplicationService cut;
-
-    @Mock
-    private PersonScoringCalculator calculatorMock;
+    private PersonScoringCalculator calculatorMock = Mockito.mock(PersonScoringCalculator.class);
+    private CreditApplicationService cut = new CreditApplicationService(calculatorMock, new CreditRatingCalculator());
 
     @Test
     @DisplayName("Should return NEGATIVE_SCORING when scoring is < 300")
@@ -28,10 +26,10 @@ class CreditApplicationServiceTest {
         LoanApplication loanApplication = CreditApplicationServiceTestFactory.create();
         BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(100);
         //when
-        DecisionType decisionType = cut.getDecision(loanApplication);
+        CreditApplicationDecision decision = cut.getDecision(loanApplication);
         //then
-        System.out.println(decisionType);
-        assertEquals(NEGATIVE_SCORING, decisionType);
+        System.out.println(decision.getDecisionType());
+        assertEquals(NEGATIVE_SCORING, decision.getDecisionType());
     }
     @Test
     @DisplayName("Should return CONTACT_REQUIRED when scoring berween 300 and 400")
@@ -39,12 +37,11 @@ class CreditApplicationServiceTest {
         //given
         LoanApplication loanApplication = CreditApplicationServiceTestFactory.create();
         BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(350);
-
         //when
-        DecisionType decisionType = cut.getDecision(loanApplication);
+        CreditApplicationDecision decision = cut.getDecision(loanApplication);
         //then
-        System.out.println(decisionType);
-        assertEquals(CONTACT_REQUIRED, decisionType);
+        System.out.println(decision.getDecisionType());
+        assertEquals(CONTACT_REQUIRED, decision.getDecisionType());
     }
     @Test
     @DisplayName("Should return NEGATIVE_CREDIT_RATING when scoring above 400 and credit rating below amount requested")
@@ -52,12 +49,11 @@ class CreditApplicationServiceTest {
         //given
         LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(Type.MORTGAGE, 300000, (byte)30, 5000, 2);
         BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(450);
-
         //when
-        DecisionType decisionType = cut.getDecision(loanApplication);
+        CreditApplicationDecision decision = cut.getDecision(loanApplication);
         //then
-        System.out.println(decisionType);
-        assertEquals(NEGATIVE_CREDIT_RATING, decisionType);
+        System.out.println(decision.getDecisionType());
+        assertEquals(NEGATIVE_CREDIT_RATING, decision.getDecisionType());
     }
     @Test
     @DisplayName("Should return POSITIVE when scoring above 400 and credit rating ok")
@@ -66,9 +62,9 @@ class CreditApplicationServiceTest {
         LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(Type.MORTGAGE, 100000, (byte)30, 5000, 2);
         BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(450);
         //when
-        DecisionType decisionType = cut.getDecision(loanApplication);
+        CreditApplicationDecision decision = cut.getDecision(loanApplication);
         //then
-        System.out.println(decisionType);
-        assertEquals(POSITIVE, decisionType);
+        System.out.println(decision.getDecisionType());
+        assertEquals(POSITIVE, decision.getDecisionType());
     }
 }
