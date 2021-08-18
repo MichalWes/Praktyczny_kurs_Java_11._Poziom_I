@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 public class CreditRatingCalculator {
     private static final Logger log = LoggerFactory.getLogger(CreditRatingCalculator.class);
     public double getCreditRating(LoanApplication loanApplication) {
+
         double creditRating = loanApplication.getPerson().getIncomePerFamilyMember() * 12 * loanApplication.getPurposeOfLoan().getPeriod();
         switch (loanApplication.getPurposeOfLoan().getType()) {
             case PERSONAL_LOAN:

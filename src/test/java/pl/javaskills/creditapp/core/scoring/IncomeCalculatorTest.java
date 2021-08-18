@@ -2,7 +2,6 @@ package pl.javaskills.creditapp.core.scoring;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pl.javaskills.creditapp.core.model.Education;
 import pl.javaskills.creditapp.core.model.Person;
 import pl.javaskills.creditapp.core.model.PersonTestFactory;
 
@@ -15,10 +14,10 @@ class IncomeCalculatorTest {
     @DisplayName("Should return calculated income score")
     public void test1(){
         //given
-        Person person = PersonTestFactory.create(5000.0, (byte)1);
+        Person person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, (byte)1);
         //when
         int scoring = cut.getIncomeScore(person);
         //then
-        assertEquals(500, scoring);
+        assertEquals(600, scoring);
     }
 }

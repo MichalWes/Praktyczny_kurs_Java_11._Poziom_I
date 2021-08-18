@@ -29,8 +29,20 @@ public class ConsoleReader {
         System.out.println("Enter your email: ");
         String email = in.next();
 
-        System.out.println("Enter total monthly income in PLN: ");
-        double totalMonthlyIncomePLN = in.nextDouble();
+        System.out.println("How many sources of income do you have?: ");
+        int sourcesOfIncome = in.nextInt();
+        FinanceData financeData = new FinanceData();
+        SourceOfIncome[] tempSourceOfIncome = new SourceOfIncome[sourcesOfIncome];
+
+        for (int i = 0; i < sourcesOfIncome; i++){
+            System.out.println("Enter type of source of income "+(i+1)+" (EMPLOYMENT_CONTRACT | SELF_EMPLOYMENT | RETIREMENT");
+            SourceOfIncome sourceOfIncome = new SourceOfIncome();
+            sourceOfIncome.setIncomeType(IncomeType.valueOf(in.next().toUpperCase()));
+            System.out.println("Enter net monthly income of source of income "+(i+1));
+            sourceOfIncome.setNetMontlyIncome(in.nextDouble());
+            tempSourceOfIncome[i] = sourceOfIncome;
+        }
+        financeData.addIncomeType(tempSourceOfIncome);
 
         System.out.println("Enter number of family dependants (including applicant):");
         int numOfFamilyDependants = in.nextInt();
@@ -47,7 +59,6 @@ public class ConsoleReader {
         PersonalData personalData = new PersonalData(name, lastName, mothersMaidenName);
         personalData.setMaritalStatus(maritalStatus);
         personalData.setEducation(Education.valueOf(education));
-        personalData.setTotalMonthlyIncomePLN(totalMonthlyIncomePLN);
         personalData.setNumOfFamilyDependants(numOfFamilyDependants);
 
         ContactData contactData = new ContactData();
@@ -59,6 +70,6 @@ public class ConsoleReader {
         purposeOfLoan.setAmount(amount);
         purposeOfLoan.setPeriod(period);
 
-        return new LoanApplication(new Person(personalData, contactData), purposeOfLoan);
+        return new LoanApplication(new Person(personalData, financeData, contactData), purposeOfLoan);
     }
 }
