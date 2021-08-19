@@ -34,37 +34,5 @@ public class EnumValidator {
         }
         return false;
     }
-    public static void printIncomeTypeEnum() {
-        for(int j=0; j<IncomeType.values().length; j++){
-            System.out.print(IncomeType.values()[j]);
-            if (j<(IncomeType.values().length-1))
-                System.out.print(" | ");
-        }
-        System.out.println("): ");
-    }
-    public static void printEducationEnum() {
-        for(int j=0; j<Education.values().length; j++){
-            System.out.print(Education.values()[j]);
-            if (j<(Education.values().length-1))
-                System.out.print(" | ");
-        }
-        System.out.println("): ");
-    }
-    public static void printMaritalStatsEnum() {
-        for(int j=0; j<MaritalStatus.values().length; j++){
-            System.out.print(MaritalStatus.values()[j]);
-            if (j<(MaritalStatus.values().length-1))
-                System.out.print(" | ");
-        }
-        System.out.println("): ");
-    }
-    public static void printTypeEnum() {
-        for(int j=0; j<Type.values().length; j++){
-            System.out.print(Type.values()[j]);
-            if (j<(Type.values().length-1))
-                System.out.print(" | ");
-        }
-        System.out.println("): ");
-    }
 }
 
