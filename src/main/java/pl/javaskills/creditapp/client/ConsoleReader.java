@@ -9,29 +9,17 @@ public class ConsoleReader {
 
     public LoanApplication readInputParameters(){
         Scanner in = new Scanner(System.in);
-
         String name = getName(in);
-
         String lastName = getLastName(in);
-
         String mothersMaidenName = getMothersMaidenName(in);
-
         MaritalStatus maritalStatus = getMaritalStatus(in);
-
         Education education = getEducation(in);
-
         String phoneNumber = getPhoneNumber(in);
-
         String email = getEmail(in);
-
         FinanceData financeData = getFinanceData(in);
-
         int numOfFamilyDependants = getNumOfFamilyDependants(in);
-
         Type type = getType(in);
-
         double amount = getAmount(in);
-
         byte period = getPeriod(in);
 
         PersonalData personalData = new PersonalData(name, lastName, mothersMaidenName);
@@ -39,16 +27,24 @@ public class ConsoleReader {
         personalData.setEducation(education);
         personalData.setNumOfFamilyDependants(numOfFamilyDependants);
 
-        ContactData contactData = new ContactData();
-        contactData.setPhoneNumber(phoneNumber);
-        contactData.setEmail(email);
+        ContactData contactData = ContactData.Builder
+                .create()
+                .withEmail(email)
+                .withPhoneNumber(phoneNumber)
+                .build();
 
-        PurposeOfLoan purposeOfLoan = new PurposeOfLoan();
-        purposeOfLoan.setType(type);
-        purposeOfLoan.setAmount(amount);
-        purposeOfLoan.setPeriod(period);
+        PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder
+                .create()
+                .withType(type)
+                .withAmount(amount)
+                .withPeriod(period)
+                .build();
 
-        return new LoanApplication(new Person(personalData, financeData, contactData), purposeOfLoan);
+        return LoanApplication.Builder
+                .create()
+                .withPerson(new Person(personalData, financeData, contactData))
+                .withPurposeOfLoan(purposeOfLoan)
+                .build();
     }
 
     private String getName(Scanner in) {
@@ -110,7 +106,7 @@ public class ConsoleReader {
             System.out.println("Enter number of family dependants (including applicant):");
             numOfFamilyDependantsStr = in.next();
 
-        }while(!NumberValidator.validateInteger(numOfFamilyDependantsStr, 0, (int)Double.POSITIVE_INFINITY));
+        }while(!NumberValidator.validateInteger(numOfFamilyDependantsStr, 0, Integer.MAX_VALUE));
         int numOfFamilyDependants = Integer.parseInt(numOfFamilyDependantsStr);
         return numOfFamilyDependants;
     }
@@ -121,7 +117,7 @@ public class ConsoleReader {
             System.out.println("Enter loan amount: ");
             amountStr = in.next();
 
-        }while(!NumberValidator.validateDouble(amountStr, 0, Double.POSITIVE_INFINITY));
+        }while(!NumberValidator.validateDouble(amountStr, 0, Double.MAX_VALUE));
         double amount = Double.parseDouble(amountStr);
         return amount;
     }
@@ -141,7 +137,7 @@ public class ConsoleReader {
     private FinanceData getFinanceData(Scanner in) {
         System.out.println("How many sources of income do you have?: ");
         int sourcesOfIncome = in.nextInt();
-        FinanceData financeData = new FinanceData();
+
         SourceOfIncome[] tempSourceOfIncome = new SourceOfIncome[sourcesOfIncome];
 
         for (int i = 0; i < sourcesOfIncome; i++){
@@ -158,7 +154,11 @@ public class ConsoleReader {
             sourceOfIncome.setNetMontlyIncome(in.nextDouble());
             tempSourceOfIncome[i] = sourceOfIncome;
         }
-        financeData.addIncomeType(tempSourceOfIncome);
+
+        FinanceData financeData = FinanceData.Builder
+                .create()
+                .withSourcesOfIncome(tempSourceOfIncome)
+                .build();
         return financeData;
     }
 

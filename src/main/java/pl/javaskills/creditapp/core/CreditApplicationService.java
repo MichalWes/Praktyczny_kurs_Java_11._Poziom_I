@@ -32,8 +32,11 @@ public class CreditApplicationService {
         }
         else{
             double creditRating = calculator.getCreditRating(loanApplication);
-            if (score > 400 && creditRating>=loanApplication.getPurposeOfLoan().getAmount()){
+            double amount = loanApplication.getPurposeOfLoan().getAmount();
+            if (score > 400 && creditRating>=amount){
+                if (amount > Constants.MIN_LOAN_AMOUNT_MORTGAGE)
                 decisionType = DecisionType.POSITIVE;
+                else decisionType = DecisionType.NEGATIVE_REQUIREMENTS_NOT_MET;
             }
             else {
                 BigDecimal roundedCreditRating = new BigDecimal(creditRating).setScale(2);

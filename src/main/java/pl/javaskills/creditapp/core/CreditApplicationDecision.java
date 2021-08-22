@@ -25,6 +25,8 @@ public class CreditApplicationDecision {
                 return "Congratulations, " + personalData.getName() + " " + personalData.getLastName() + ", decision is positive.";
             case NEGATIVE_CREDIT_RATING:
                 return "Sorry, " + personalData.getName() + " " + personalData.getLastName() + ", decision is negative. Bank can borrow only " + decisionType.getCreditRating();
+            case NEGATIVE_REQUIREMENTS_NOT_MET:
+                return "Sorry, " + personalData.getName() + " " + personalData.getLastName() + ", decision is negative. Minimum loan amount for mortgage is: "+Constants.MIN_LOAN_AMOUNT_MORTGAGE;
         }
         return null;
     }

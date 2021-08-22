@@ -13,8 +13,10 @@ public class PersonTestFactory {
         source1.setNetMontlyIncome(3000);
         source2.setNetMontlyIncome(1000);
         source3.setNetMontlyIncome(1000);
-        FinanceData financeData = new FinanceData();
-        financeData.addIncomeType(source1, source2, source3);
+        FinanceData financeData = FinanceData.Builder
+                .create()
+                .withSourcesOfIncome(source1, source2, source3)
+                .build();
 
         return new Person(personalData, financeData, null);
     }
@@ -31,8 +33,10 @@ public class PersonTestFactory {
         source1.setNetMontlyIncome(monthlyIncomePLN1);
         source2.setNetMontlyIncome(monthlyIncomePLN2);
         source3.setNetMontlyIncome(monthlyIncomePLN3);
-        FinanceData financeData = new FinanceData();
-        financeData.addIncomeType(source1, source2, source3);
+        FinanceData financeData = FinanceData.Builder
+                .create()
+                .withSourcesOfIncome(source1, source2, source3)
+                .build();
 
         return new Person(personalData, financeData, null);
     }
@@ -48,8 +52,10 @@ public class PersonTestFactory {
         source1.setNetMontlyIncome(3000);
         source2.setNetMontlyIncome(1000);
         source3.setNetMontlyIncome(1000);
-        FinanceData financeData = new FinanceData();
-        financeData.addIncomeType(source1, source2, source3);
+        FinanceData financeData = FinanceData.Builder
+                .create()
+                .withSourcesOfIncome(source1, source2, source3)
+                .build();
 
         return new Person(personalData, financeData, null);
     }
@@ -65,8 +71,10 @@ public class PersonTestFactory {
         source1.setNetMontlyIncome(3000);
         source2.setNetMontlyIncome(1000);
         source3.setNetMontlyIncome(1000);
-        FinanceData financeData = new FinanceData();
-        financeData.addIncomeType(source1, source2, source3);
+        FinanceData financeData = FinanceData.Builder
+                .create()
+                .withSourcesOfIncome(source1, source2, source3)
+                .build();
 
         return new Person(personalData, financeData, null);
     }
@@ -82,9 +90,10 @@ public class PersonTestFactory {
         source1.setNetMontlyIncome(monthlyIncomePLN1);
         source2.setNetMontlyIncome(monthlyIncomePLN2);
         source3.setNetMontlyIncome(monthlyIncomePLN3);
-        FinanceData financeData = new FinanceData();
-        financeData.addIncomeType(source1, source2, source3);
-
+            FinanceData financeData = FinanceData.Builder
+                    .create()
+                    .withSourcesOfIncome(source1, source2, source3)
+                    .build();
         return new Person(personalData, financeData, null);
     }
 }

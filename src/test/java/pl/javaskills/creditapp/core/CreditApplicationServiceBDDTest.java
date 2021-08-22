@@ -7,14 +7,18 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.javaskills.creditapp.core.model.*;
+import pl.javaskills.creditapp.core.model.CreditApplicationServiceTestFactory;
+import pl.javaskills.creditapp.core.model.LoanApplication;
+import pl.javaskills.creditapp.core.model.Person;
+import pl.javaskills.creditapp.core.model.PersonalData;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
+/*
 @ExtendWith(MockitoExtension.class)
-class CreditApplicationServiceTest {
+class CreditApplicationServiceBDDTest {
     //calculatorMock = Mockito.mock(PersonScoringCalculator.class);
     @InjectMocks
     private CreditApplicationService cut;
@@ -29,6 +33,7 @@ class CreditApplicationServiceTest {
     @DisplayName("Should return NEGATIVE_SCORING when scoring is < 300")
     public void test1(){
         //given
+        Person person = new Person(PersonalData personalData,FinanceData);
         LoanApplication loanApplication = CreditApplicationServiceTestFactory.create();
         BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(100);
         //when
@@ -71,4 +76,4 @@ class CreditApplicationServiceTest {
         //then
         assertEquals(NEGATIVE_REQUIREMENTS_NOT_MET, decision.getDecisionType());
     }
-}
+}*/

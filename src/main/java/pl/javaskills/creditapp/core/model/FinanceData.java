@@ -4,8 +4,25 @@ public class FinanceData {
 
     private SourceOfIncome[] sourcesOfIncome;
 
-    public void addIncomeType(SourceOfIncome... sourcesOfIncome){
+    private FinanceData(SourceOfIncome[] sourcesOfIncome) {
         this.sourcesOfIncome = sourcesOfIncome;
+    }
+
+    public static class Builder {
+        private SourceOfIncome[] sourcesOfIncome;
+
+        public static Builder create(){
+            return new Builder();
+        }
+
+        public Builder withSourcesOfIncome(SourceOfIncome... sourcesOfIncome){
+            this.sourcesOfIncome = sourcesOfIncome;
+            return this;
+        }
+
+        public FinanceData build(){
+            return new FinanceData(sourcesOfIncome);
+        }
     }
 
     public SourceOfIncome[] getSourcesOfIncome() {
