@@ -22,10 +22,15 @@ public class ConsoleReader {
         double amount = getAmount(in);
         byte period = getPeriod(in);
 
-        PersonalData personalData = new PersonalData(name, lastName, mothersMaidenName);
-        personalData.setMaritalStatus(maritalStatus);
-        personalData.setEducation(education);
-        personalData.setNumOfFamilyDependants(numOfFamilyDependants);
+        PersonalData personalData = PersonalData.Builder
+                .create()
+                .withName(name)
+                .withLastName(lastName)
+                .withMothersMaidenName(mothersMaidenName)
+                .withMaritalStatus(maritalStatus)
+                .withEducation(education)
+                .withNumOfFamilyDependants(numOfFamilyDependants)
+                .build();
 
         ContactData contactData = ContactData.Builder
                 .create()
@@ -40,9 +45,16 @@ public class ConsoleReader {
                 .withPeriod(period)
                 .build();
 
+        Person person = Person.Builder
+                .create()
+                .withPersonalData(personalData)
+                .withFinanceData(financeData)
+                .withContactData(contactData)
+                .build();
+
         return LoanApplication.Builder
                 .create()
-                .withPerson(new Person(personalData, financeData, contactData))
+                .withPerson(person)
                 .withPurposeOfLoan(purposeOfLoan)
                 .build();
     }
@@ -148,10 +160,12 @@ public class ConsoleReader {
                 incomeTypeStr = in.next().toUpperCase();
             }while(!EnumValidator.validateIncomeType(incomeTypeStr));
             IncomeType incomeType = IncomeType.valueOf(incomeTypeStr);
-            SourceOfIncome sourceOfIncome = new SourceOfIncome();
-            sourceOfIncome.setIncomeType(incomeType);
             System.out.println("Enter net monthly income of source of income "+(i+1));
-            sourceOfIncome.setNetMontlyIncome(in.nextDouble());
+            SourceOfIncome sourceOfIncome = SourceOfIncome.Builder
+                    .create()
+                    .withIncomeType(incomeType)
+                    .withNetMontlyIncome(in.nextDouble())
+                    .build();
             tempSourceOfIncome[i] = sourceOfIncome;
         }
 

@@ -2,16 +2,8 @@ package pl.javaskills.creditapp.core.model;
 
 public class LoanApplication {
 
-    private Person person;
-    private PurposeOfLoan purposeOfLoan;
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public PurposeOfLoan getPurposeOfLoan() {
-        return purposeOfLoan;
-    }
+    private final Person person;
+    private final PurposeOfLoan purposeOfLoan;
 
     private LoanApplication(Person person, PurposeOfLoan purposeOfLoan) {
         this.person = person;
@@ -41,5 +33,12 @@ public class LoanApplication {
         }
     }
 
+    public Person getPerson() {
+        return person;
+    }
+
+    public PurposeOfLoan getPurposeOfLoan() {
+        return purposeOfLoan;
+    }
 
 }

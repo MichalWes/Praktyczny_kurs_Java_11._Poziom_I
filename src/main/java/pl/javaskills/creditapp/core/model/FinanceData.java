@@ -2,7 +2,7 @@ package pl.javaskills.creditapp.core.model;
 
 public class FinanceData {
 
-    private SourceOfIncome[] sourcesOfIncome;
+    private final SourceOfIncome[] sourcesOfIncome;
 
     private FinanceData(SourceOfIncome[] sourcesOfIncome) {
         this.sourcesOfIncome = sourcesOfIncome;

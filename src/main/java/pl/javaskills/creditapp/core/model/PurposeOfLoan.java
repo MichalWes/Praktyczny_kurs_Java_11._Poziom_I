@@ -1,11 +1,14 @@
 package pl.javaskills.creditapp.core.model;
 
 public class PurposeOfLoan {
-    private Type type;
-    private double amount;
-    private byte period;
+    private final Type type;
+    private final double amount;
+    private  final byte period;
 
-    private PurposeOfLoan(){
+    private PurposeOfLoan(Type type, double amount, byte period){
+        this.type = type;
+        this.amount = amount;
+        this.period = period;
     }
 
     public Type getType() {
@@ -46,11 +49,7 @@ public class PurposeOfLoan {
         }
 
         public PurposeOfLoan build(){
-            PurposeOfLoan purposeOfLoan = new PurposeOfLoan();
-            purposeOfLoan.type = type;
-            purposeOfLoan.amount = amount;
-            purposeOfLoan.period = period;
-            return purposeOfLoan;
+            return new PurposeOfLoan(type, amount, period);
         }
     }
 
