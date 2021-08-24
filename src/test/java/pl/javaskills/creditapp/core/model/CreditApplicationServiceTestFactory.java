@@ -2,11 +2,14 @@ package pl.javaskills.creditapp.core.model;
 
 public class CreditApplicationServiceTestFactory {
 
-   /* public static LoanApplication create(Person person, PurposeOfLoan purposeOfLoan){
-        Person person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, 2, Education.MIDDLE, MaritalStatus.SEPARATED);
+   public static LoanApplication create(Person person, PurposeOfLoan purposeOfLoan) {
+       return LoanApplication.Builder
+               .create()
+               .withPerson(person)
+               .withPurposeOfLoan(purposeOfLoan)
+               .build();
+   }
 
-        return new LoanApplication(person,purposeOfLoan);
-*/
     public static LoanApplication create(){
         Person person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, 2, Education.MIDDLE, MaritalStatus.SEPARATED);
         LoanApplication loanApplication = LoanApplication.Builder
@@ -16,6 +19,7 @@ public class CreditApplicationServiceTestFactory {
                 .build();
         return loanApplication;
     }
+
     public static LoanApplication create(double amount){
         Person person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, 2, Education.MIDDLE, MaritalStatus.SEPARATED);
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder.create()

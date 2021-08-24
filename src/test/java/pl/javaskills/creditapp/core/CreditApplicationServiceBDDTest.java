@@ -7,73 +7,69 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import pl.javaskills.creditapp.core.model.CreditApplicationServiceTestFactory;
-import pl.javaskills.creditapp.core.model.LoanApplication;
-import pl.javaskills.creditapp.core.model.Person;
-import pl.javaskills.creditapp.core.model.PersonalData;
+import pl.javaskills.creditapp.core.model.*;
+import pl.javaskills.creditapp.core.scoring.EducationCalculator;
+import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
+import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
-/*
-@ExtendWith(MockitoExtension.class)
+
 class CreditApplicationServiceBDDTest {
-    //calculatorMock = Mockito.mock(PersonScoringCalculator.class);
-    @InjectMocks
-    private CreditApplicationService cut;
 
-    @Mock
-    private PersonScoringCalculator calculatorMock;
-    @Mock
-    private CreditRatingCalculator creditRatingCalculatorMock;
-
+    private CreditApplicationService cut = new CreditApplicationService(new PersonScoringCalculator(new IncomeCalculator(), new EducationCalculator(), new MaritalStatusCalculator()), new CreditRatingCalculator());
 
     @Test
-    @DisplayName("Should return NEGATIVE_SCORING when scoring is < 300")
-    public void test1(){
+    @DisplayName("Should return NEGATIVE_REQUIREMENTS_NOT_MET when scoring is >= 400 and requested loan amount lower than 100000")
+    public void test1() {
         //given
-        Person person = new Person(PersonalData personalData,FinanceData);
-        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create();
-        BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(100);
+        PersonalData personalData = PersonalData.Builder
+                .create()
+                .withName("test")
+                .withLastName("test")
+                .withMothersMaidenName("test")
+                .withNumOfFamilyDependants(2)
+                .withEducation(Education.MIDDLE)
+                .withMaritalStatus(MaritalStatus.MARRIED)
+                .build();
+
+        SourceOfIncome source1 = SourceOfIncome.Builder
+                .create()
+                .withIncomeType(IncomeType.SELF_EMPLOYMENT)
+                .withNetMontlyIncome(10000)
+                .build();
+
+        FinanceData financeData = FinanceData.Builder
+                .create()
+                .withSourcesOfIncome(source1)
+                .build();
+
+        Person person = Person.Builder
+                .create()
+                .withPersonalData(personalData)
+                .withFinanceData(financeData)
+                .withContactData(null)
+                .build();
+
+        PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder
+                .create()
+                .withType(Type.MORTGAGE)
+                .withPeriod((byte) 30)
+                .withAmount(50000)
+                .build();
+
+        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(person, purposeOfLoan);
+
         //when
         CreditApplicationDecision decision = cut.getDecision(loanApplication);
+        DecisionType decisionType = decision.getDecisionType();
         //then
-        assertEquals(NEGATIVE_SCORING, decision.getDecisionType());
+        assertEquals(NEGATIVE_REQUIREMENTS_NOT_MET,decisionType);
+        assertEquals(600, decisionType.getScoring());
+        assertEquals(new BigDecimal(360000.0).setScale(2),decisionType.getCreditRating());
     }
-    @Test
-    @DisplayName("Should return CONTACT_REQUIRED when scoring berween 300 and 400")
-    public void test2(){
-        //given
-        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create();
-        BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(350);
-        //when
-        CreditApplicationDecision decision = cut.getDecision(loanApplication);
-        //then
-        assertEquals(CONTACT_REQUIRED, decision.getDecisionType());
-    }
-    @Test
-    @DisplayName("Should return NEGATIVE_CREDIT_RATING when scoring above 400 and credit rating below amount requested")
-    public void test3(){
-        //given
-        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(300000.0);
-        BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(450);
-        BDDMockito.given(creditRatingCalculatorMock.getCreditRating(eq(loanApplication))).willReturn(250000.0);
-        //when
-        CreditApplicationDecision decision = cut.getDecision(loanApplication);
-        //then
-        assertEquals(NEGATIVE_CREDIT_RATING, decision.getDecisionType());
-    }
-    @Test
-    @DisplayName("Should return POSITIVE when scoring above 400 and credit rating ok")
-    public void test4(){
-        //given
-        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(100000.0);
-        BDDMockito.given(calculatorMock.calculate(eq(loanApplication.getPerson()))).willReturn(450);
-        BDDMockito.given(creditRatingCalculatorMock.getCreditRating(eq(loanApplication))).willReturn(250000.0);
-        //when
-        CreditApplicationDecision decision = cut.getDecision(loanApplication);
-        //then
-        assertEquals(NEGATIVE_REQUIREMENTS_NOT_MET, decision.getDecisionType());
-    }
-}*/
+}

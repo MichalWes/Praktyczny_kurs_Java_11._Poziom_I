@@ -23,7 +23,8 @@ public class CreditApplicationService {
         log.info("Application ID is "+id);
         MDC.put("id", id);
         int score = personScoringCalculator.calculate(loanApplication.getPerson());
-        DecisionType decisionType;
+        DecisionType decisionType = null;
+
         if (score < 300){
             decisionType = DecisionType.NEGATIVE_SCORING;
         }
@@ -33,17 +34,24 @@ public class CreditApplicationService {
         else{
             double creditRating = calculator.getCreditRating(loanApplication);
             double amount = loanApplication.getPurposeOfLoan().getAmount();
+            BigDecimal roundedCreditRating = new BigDecimal(creditRating).setScale(2);
+
+
             if (score > 400 && creditRating>=amount){
                 if (amount > Constants.MIN_LOAN_AMOUNT_MORTGAGE)
                 decisionType = DecisionType.POSITIVE;
-                else decisionType = DecisionType.NEGATIVE_REQUIREMENTS_NOT_MET;
+                else {
+                    decisionType = DecisionType.NEGATIVE_REQUIREMENTS_NOT_MET;
+                    decisionType.setCreditRating(roundedCreditRating);
+                }
             }
             else {
-                BigDecimal roundedCreditRating = new BigDecimal(creditRating).setScale(2);
                 decisionType = DecisionType.NEGATIVE_CREDIT_RATING;
                 decisionType.setCreditRating(roundedCreditRating);
             }
         }
+
+        decisionType.setScoring(score);
         log.info("Decision = "+decisionType);
         return new CreditApplicationDecision(decisionType, loanApplication.getPerson().getPersonalData());
     }

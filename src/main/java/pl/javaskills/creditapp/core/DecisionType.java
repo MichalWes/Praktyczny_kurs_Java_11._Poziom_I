@@ -10,6 +10,15 @@ public enum DecisionType {
     NEGATIVE_REQUIREMENTS_NOT_MET();
 
     private BigDecimal creditRating;
+    private int scoring;
+
+    public int getScoring() {
+        return scoring;
+    }
+
+    public void setScoring(int scoring) {
+        this.scoring = scoring;
+    }
 
     DecisionType() {
     }

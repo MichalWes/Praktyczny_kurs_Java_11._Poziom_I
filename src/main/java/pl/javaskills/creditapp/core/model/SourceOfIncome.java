@@ -32,8 +32,6 @@ public class SourceOfIncome {
         }
     }
 
-
-
     public IncomeType getIncomeType() {
         return incomeType;
     }
