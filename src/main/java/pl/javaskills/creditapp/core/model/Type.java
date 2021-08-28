@@ -1,10 +1,10 @@
 package pl.javaskills.creditapp.core.model;
 
-import pl.javaskills.creditapp.core.Constants;
+import static pl.javaskills.creditapp.core.Constants.*;
 
 public enum Type {
-    MORTGAGE(Constants.MORTGAGE_LOAN_RATE),
-    PERSONAL_LOAN(Constants.PERSONAL_LOAN_LOAN_RATE);
+    MORTGAGE(MORTGAGE_LOAN_RATE),
+    PERSONAL_LOAN(PERSONAL_LOAN_LOAN_RATE);
 
     private final double rate;
 

@@ -1,17 +1,41 @@
 package pl.javaskills.creditapp.core.model;
 
-public class ContactData {
-    private final String email;
-    private final String phoneNumber;
+import java.util.Optional;
 
-    private ContactData(String email, String phoneNumber) {
+public class ContactData {
+    private String email;
+    private String phoneNumber;
+    private Address homeAddress;
+    private Optional<Address> correspondeceAddress;
+
+    private ContactData(String email, String phoneNumber, Address homeAddress, Optional<Address> correspondenceAddress) {
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.homeAddress = homeAddress;
+        this.correspondeceAddress = correspondenceAddress;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public Address getHomeAddress() {
+        return homeAddress;
+    }
+
+    public Optional<Address> getCorrespondenceAddress() {
+        return correspondeceAddress;
     }
 
     public static class Builder{
         private String email;
         private String phoneNumber;
+        private Address homeAddress;
+        private Address correspondeceAddress;
 
         private Builder(){
         }
@@ -30,13 +54,21 @@ public class ContactData {
             return this;
         }
 
+        public Builder withHomeAddress(Address homeAddress){
+            this.homeAddress = homeAddress;
+            return this;
+        }
+
+        public Builder withCorrespondeceAddress(Address correspondeceAddress){
+            this.correspondeceAddress = correspondeceAddress;
+            return this;
+        }
+
         public ContactData build(){
-            return new ContactData(email, phoneNumber);
+            Optional<Address> correspondeceAddress = this.homeAddress.equals(this.correspondeceAddress) ?
+                    Optional.empty() : Optional.ofNullable(this.correspondeceAddress);
+
+            return new ContactData(this.email, this.phoneNumber, this.homeAddress, correspondeceAddress);
         }
     }
-
-
-
-
-
 }

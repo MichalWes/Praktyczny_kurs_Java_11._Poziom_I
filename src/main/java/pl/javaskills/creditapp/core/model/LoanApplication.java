@@ -1,44 +1,41 @@
 package pl.javaskills.creditapp.core.model;
 
+import java.util.Optional;
+
 public class LoanApplication {
 
-    private final Person person;
+    private final Optional<NaturalPerson> naturalPerson;
+    private final Optional<SelfEmployed> selfEmployed;
     private final PurposeOfLoan purposeOfLoan;
 
-    private LoanApplication(Person person, PurposeOfLoan purposeOfLoan) {
-        this.person = person;
+   public LoanApplication(NaturalPerson naturalPerson, PurposeOfLoan purposeOfLoan) {
+        this.naturalPerson = Optional.of(naturalPerson);
+        this.selfEmployed = Optional.empty();
         this.purposeOfLoan = purposeOfLoan;
     }
 
-    public static class Builder{
-        private Person person;
-        private PurposeOfLoan purposeOfLoan;
-
-        public static Builder create(){
-            return new Builder();
-        }
-
-        public Builder withPerson(Person person){
-            this.person = person;
-            return this;
-        }
-
-        public Builder withPurposeOfLoan(PurposeOfLoan purposeOfLoan){
-            this.purposeOfLoan = purposeOfLoan;
-            return this;
-        }
-
-        public LoanApplication build(){
-            return new LoanApplication(person, purposeOfLoan);
-        }
+    public LoanApplication(SelfEmployed selfEmployed, PurposeOfLoan purposeOfLoan) {
+        this.selfEmployed = Optional.of(selfEmployed);
+        this.naturalPerson = Optional.empty();
+        this.purposeOfLoan = purposeOfLoan;
     }
 
-    public Person getPerson() {
-        return person;
+    public Optional<NaturalPerson> getNaturalPerson() {
+        return naturalPerson;
+    }
+
+    public Optional<SelfEmployed> getSelfEmployed() {
+        return selfEmployed;
     }
 
     public PurposeOfLoan getPurposeOfLoan() {
         return purposeOfLoan;
     }
 
+    public Person getPerson() {
+       if (naturalPerson.isPresent()){
+           return naturalPerson.get();
+       }
+       return selfEmployed.get();
+    }
 }

@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
-
 class CreditApplicationServiceBDDTest {
 
     private CreditApplicationService cut = new CreditApplicationService(new PersonScoringCalculator(new IncomeCalculator(), new EducationCalculator(), new MaritalStatusCalculator()), new CreditRatingCalculator());
@@ -48,11 +47,12 @@ class CreditApplicationServiceBDDTest {
                 .withSourcesOfIncome(source1)
                 .build();
 
-        Person person = Person.Builder
+        NaturalPerson person = NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
                 .withContactData(null)
+                .withPesel(null)
                 .build();
 
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder
@@ -69,7 +69,7 @@ class CreditApplicationServiceBDDTest {
         DecisionType decisionType = decision.getDecisionType();
         //then
         assertEquals(NEGATIVE_REQUIREMENTS_NOT_MET,decisionType);
-        assertEquals(600, decisionType.getScoring());
-        assertEquals(new BigDecimal(360000.0).setScale(2),decisionType.getCreditRating());
+        assertEquals(600, decision.getScoring());
+        assertEquals(360000.0,decision.getCreditRating());
     }
 }

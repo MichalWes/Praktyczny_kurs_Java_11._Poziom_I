@@ -22,6 +22,27 @@ public class ConsoleReader {
         double amount = getAmount(in);
         byte period = getPeriod(in);
 
+        System.out.println("Enter your home address street: ");
+        String hStreet = in.next();
+        System.out.println("Enter your home address city: ");
+        String hCity = in.next();
+        System.out.println("Enter your home address house number: ");
+        String hHouseNumber = in.next();
+        System.out.println("Enter your home address zipcode: ");
+        String hZipCode = in.next();
+        System.out.println("Enter your home address state: ");
+        String hState = in.next();
+        System.out.println("Enter your correspondence address street: ");
+        String cStreet = in.next();
+        System.out.println("Enter your correspondence address city: ");
+        String cCity = in.next();
+        System.out.println("Enter your correspondence address house number: ");
+        String cHouseNumber = in.next();
+        System.out.println("Enter your correspondence address street: ");
+        String cZipCode = in.next();
+        System.out.println("Enter your correspondence address state: ");
+        String cState = in.next();
+
         PersonalData personalData = PersonalData.Builder
                 .create()
                 .withName(name)
@@ -32,10 +53,30 @@ public class ConsoleReader {
                 .withNumOfFamilyDependants(numOfFamilyDependants)
                 .build();
 
+        Address homeAddress = Address.Builder
+                .create()
+                .withStreet(hStreet)
+                .withHouseNumber(hHouseNumber)
+                .withZipCode(hZipCode)
+                .withCity(hCity)
+                .withState(hState)
+                .build();
+
+        Address correspondeceAddress = Address.Builder
+                .create()
+                .withStreet(cStreet)
+                .withHouseNumber(cHouseNumber)
+                .withZipCode(cZipCode)
+                .withCity(cCity)
+                .withState(cState)
+                .build();
+
         ContactData contactData = ContactData.Builder
                 .create()
                 .withEmail(email)
                 .withPhoneNumber(phoneNumber)
+                .withHomeAddress(homeAddress)
+                .withCorrespondeceAddress(correspondeceAddress)
                 .build();
 
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder
@@ -45,18 +86,14 @@ public class ConsoleReader {
                 .withPeriod(period)
                 .build();
 
-        Person person = Person.Builder
+        NaturalPerson person = NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
                 .withContactData(contactData)
                 .build();
 
-        return LoanApplication.Builder
-                .create()
-                .withPerson(person)
-                .withPurposeOfLoan(purposeOfLoan)
-                .build();
+        return new LoanApplication(person, purposeOfLoan);
     }
 
     private String getName(Scanner in) {

@@ -5,7 +5,7 @@ public class Person {
     private final FinanceData financeData;
     private final ContactData contactData;
 
-    private Person(PersonalData personalData, FinanceData financeData, ContactData contactData) {
+    protected Person(PersonalData personalData, FinanceData financeData, ContactData contactData) {
         this.personalData = personalData;
         this.financeData = financeData;
         this.contactData = contactData;

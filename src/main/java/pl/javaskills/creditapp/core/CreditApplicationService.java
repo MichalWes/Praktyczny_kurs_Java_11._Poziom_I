@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import pl.javaskills.creditapp.core.model.LoanApplication;
-
-import java.math.BigDecimal;
 import java.util.UUID;
+import static pl.javaskills.creditapp.core.Constants.*;
+import static pl.javaskills.creditapp.core.DecisionType.*;
 
 public class CreditApplicationService {
     private static final Logger log = LoggerFactory.getLogger(CreditApplicationService.class);
@@ -23,36 +23,31 @@ public class CreditApplicationService {
         log.info("Application ID is "+id);
         MDC.put("id", id);
         int score = personScoringCalculator.calculate(loanApplication.getPerson());
-        DecisionType decisionType = null;
+        double creditRating = calculator.getCreditRating(loanApplication);
+        DecisionType decisionType ;
 
         if (score < 300){
-            decisionType = DecisionType.NEGATIVE_SCORING;
+            decisionType = NEGATIVE_SCORING;
         }
         else if (score >= 300 && score <=400){
-            decisionType = DecisionType.CONTACT_REQUIRED;
+            decisionType = CONTACT_REQUIRED;
         }
         else{
-            double creditRating = calculator.getCreditRating(loanApplication);
-            double amount = loanApplication.getPurposeOfLoan().getAmount();
-            BigDecimal roundedCreditRating = new BigDecimal(creditRating).setScale(2);
 
+            double amount = loanApplication.getPurposeOfLoan().getAmount();
 
             if (score > 400 && creditRating>=amount){
-                if (amount > Constants.MIN_LOAN_AMOUNT_MORTGAGE)
-                decisionType = DecisionType.POSITIVE;
+                if (amount > MIN_LOAN_AMOUNT_MORTGAGE)
+                decisionType = POSITIVE;
                 else {
-                    decisionType = DecisionType.NEGATIVE_REQUIREMENTS_NOT_MET;
-                    decisionType.setCreditRating(roundedCreditRating);
+                    decisionType = NEGATIVE_REQUIREMENTS_NOT_MET;
                 }
             }
             else {
-                decisionType = DecisionType.NEGATIVE_CREDIT_RATING;
-                decisionType.setCreditRating(roundedCreditRating);
+                decisionType = NEGATIVE_CREDIT_RATING;
             }
         }
-
-        decisionType.setScoring(score);
         log.info("Decision = "+decisionType);
-        return new CreditApplicationDecision(decisionType, loanApplication.getPerson().getPersonalData());
+        return new CreditApplicationDecision(decisionType, loanApplication.getPerson().getPersonalData(), creditRating, score);
     }
 }

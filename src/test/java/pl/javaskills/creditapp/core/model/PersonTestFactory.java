@@ -2,7 +2,7 @@ package pl.javaskills.creditapp.core.model;
 
 public class PersonTestFactory {
 
-    public static Person create(MaritalStatus maritalStatus) {
+    public static NaturalPerson create(MaritalStatus maritalStatus) {
         PersonalData personalData = PersonalData.Builder
                 .create()
                 .withName("test")
@@ -31,7 +31,7 @@ public class PersonTestFactory {
                 .withSourcesOfIncome(source1, source2, source3)
                 .build();
 
-        return Person.Builder
+        return NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
@@ -40,7 +40,7 @@ public class PersonTestFactory {
     }
 
 
-    public static Person create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3 ,byte numOfFamilyDependants) {
+    public static NaturalPerson create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3 ,byte numOfFamilyDependants) {
         PersonalData personalData = PersonalData.Builder
                 .create()
                 .withName("test")
@@ -69,7 +69,7 @@ public class PersonTestFactory {
                 .withSourcesOfIncome(source1, source2, source3)
                 .build();
 
-        return Person.Builder
+        return NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
@@ -77,7 +77,7 @@ public class PersonTestFactory {
                 .build();
     }
 
-    public static Person create(Education education) {
+    public static NaturalPerson create(Education education) {
         PersonalData personalData = PersonalData.Builder
                 .create()
                 .withName("test")
@@ -106,7 +106,7 @@ public class PersonTestFactory {
                 .withSourcesOfIncome(source1, source2, source3)
                 .build();
 
-        return Person.Builder
+        return NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
@@ -114,7 +114,7 @@ public class PersonTestFactory {
                 .build();
     }
 
-    public static Person create() {
+    public static NaturalPerson create() {
         PersonalData personalData = PersonalData.Builder
                 .create()
                 .withName("test")
@@ -143,7 +143,7 @@ public class PersonTestFactory {
                 .withSourcesOfIncome(source1, source2, source3)
                 .build();
 
-        return Person.Builder
+        return NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
@@ -151,7 +151,7 @@ public class PersonTestFactory {
                 .build();
     }
 
-        public static Person create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3, int numOfFamilyDependants, Education education, MaritalStatus maritalStatus){
+        public static NaturalPerson create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3, int numOfFamilyDependants, Education education, MaritalStatus maritalStatus){
             PersonalData personalData = PersonalData.Builder
                     .create()
                     .withName("test")
@@ -180,7 +180,7 @@ public class PersonTestFactory {
                 .withSourcesOfIncome(source1, source2, source3)
                 .build();
 
-        return Person.Builder
+        return NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
