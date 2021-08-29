@@ -4,8 +4,8 @@ public enum Education {
     PRIMARY(-100),
     MIDDLE(),
     SECONDARY(),
-    POST_SECONDARY(),
     TERTIARY(100),
+    POST_SECONDARY(),
     NONE(-200);
 
     private int score = 0;

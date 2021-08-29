@@ -6,6 +6,10 @@ public class CreditApplicationServiceTestFactory {
        return new LoanApplication(person, purposeOfLoan);
    }
 
+    public static LoanApplication create(SelfEmployed person, PurposeOfLoan purposeOfLoan) {
+        return new LoanApplication(person, purposeOfLoan);
+    }
+
     public static LoanApplication create(){
         NaturalPerson person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, 2, Education.MIDDLE, MaritalStatus.SEPARATED);
         return new LoanApplication(person, null);
@@ -19,4 +23,6 @@ public class CreditApplicationServiceTestFactory {
                 .build();
         return new LoanApplication(person, purposeOfLoan);
     }
+
+
 }

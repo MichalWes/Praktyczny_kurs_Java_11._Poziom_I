@@ -1,5 +1,6 @@
 package pl.javaskills.creditapp.core;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import pl.javaskills.creditapp.core.model.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
@@ -21,8 +23,17 @@ class CreditApplicationServiceTest {
 
     @Mock
     private PersonScoringCalculator calculatorMock;
+
+    @Mock
+    private PersonScoringCalculatorFactory personScoringCalculatorFactoryMock;
+
     @Mock
     private CreditRatingCalculator creditRatingCalculatorMock;
+
+    @BeforeEach
+    public void init(){
+        BDDMockito.given(personScoringCalculatorFactoryMock.getCalculator(any(Person.class))).willReturn(calculatorMock);
+    }
 
 
     @Test

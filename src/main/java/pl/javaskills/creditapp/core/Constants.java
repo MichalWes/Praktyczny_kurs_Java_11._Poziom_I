@@ -20,7 +20,7 @@ public class Constants {
         INTEGER_REGEX = "[0-9]+";
         NAME_REGEX = "[A-ZĄ-Ź][a-zą-ź]{2,9}";
         LAST_NAME_REGEX = "([A-ZĄ-Ź][a-zą-ź]+)([\\s-]([A-Z][a-zą-ź]+))?";
-        LAST_NAME_REGEX2 = "(?=([A-ZĄ-Ź][a-zą-ź]+)([\\s-][A-Z][a-zą-ź]+)?).{6,20}";
+        LAST_NAME_REGEX2 = "(?=([=A-ZĄ-Ź][a-zą-ź]+)([\\s-][A-Z][a-zą-ź]+)?).{6,20}";
         EMAIL_REGEX =  ".+@.+\\..+";
         PHONE_NUMBER_REGEX = "(\\+\\d{2})?\\d{9}";
     }

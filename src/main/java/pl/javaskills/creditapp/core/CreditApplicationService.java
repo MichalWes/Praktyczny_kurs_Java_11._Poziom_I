@@ -10,11 +10,11 @@ import static pl.javaskills.creditapp.core.DecisionType.*;
 
 public class CreditApplicationService {
     private static final Logger log = LoggerFactory.getLogger(CreditApplicationService.class);
-    private final PersonScoringCalculator personScoringCalculator;
+    private final PersonScoringCalculatorFactory personScoringCalculatorFactory;
     private final CreditRatingCalculator calculator;
 
-    public CreditApplicationService(PersonScoringCalculator personScoringCalculator, CreditRatingCalculator calculator) {
-        this.personScoringCalculator = personScoringCalculator;
+    public CreditApplicationService(PersonScoringCalculatorFactory personScoringCalculatorFactory, CreditRatingCalculator calculator) {
+        this.personScoringCalculatorFactory = personScoringCalculatorFactory;
         this.calculator = calculator;
     }
 
@@ -22,7 +22,7 @@ public class CreditApplicationService {
         String id = UUID.randomUUID().toString();
         log.info("Application ID is "+id);
         MDC.put("id", id);
-        int score = personScoringCalculator.calculate(loanApplication.getPerson());
+        int score = personScoringCalculatorFactory.getCalculator(loanApplication.getPerson()).calculate(loanApplication.getPerson());
         double creditRating = calculator.getCreditRating(loanApplication);
         DecisionType decisionType ;
 

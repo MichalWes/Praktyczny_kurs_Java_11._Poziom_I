@@ -3,11 +3,17 @@ package pl.javaskills.creditapp.core.model;
 public class SelfEmployed extends Person{
     private final String nip;
     private final String regon;
+    private final int yearsSinceFounded;
 
-    private SelfEmployed(String nip, String regon, PersonalData personalData, FinanceData financeData, ContactData contactData) {
+    public int getYearsSinceFounded() {
+        return yearsSinceFounded;
+    }
+
+    private SelfEmployed(String nip, String regon, int yearsSinceFounded, PersonalData personalData, FinanceData financeData, ContactData contactData) {
         super(personalData, financeData, contactData);
         this.nip = nip;
         this.regon = regon;
+        this.yearsSinceFounded = yearsSinceFounded;
     }
 
     public static class Builder{
@@ -16,6 +22,7 @@ public class SelfEmployed extends Person{
         private ContactData contactData;
         private String nip;
         private String regon;
+        private int yearsSinceFounded;
 
 
         private Builder(){
@@ -50,8 +57,13 @@ public class SelfEmployed extends Person{
             return this;
         }
 
+        public Builder withYearsSinceFounded(int yearsSinceFounded){
+            this.yearsSinceFounded = yearsSinceFounded;
+            return this;
+        }
+
         public SelfEmployed build(){
-            return new SelfEmployed(nip, regon, personalData, financeData, contactData);
+            return new SelfEmployed(nip, regon, yearsSinceFounded, personalData, financeData, contactData);
         }
     }
 }

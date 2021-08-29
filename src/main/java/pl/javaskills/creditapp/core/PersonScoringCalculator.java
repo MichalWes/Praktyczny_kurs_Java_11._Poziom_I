@@ -7,7 +7,7 @@ import pl.javaskills.creditapp.core.scoring.EducationCalculator;
 import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
 import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
 
-public class PersonScoringCalculator {
+public abstract class PersonScoringCalculator {
     private static final Logger log = LoggerFactory.getLogger(PersonScoringCalculator.class);
     private final IncomeCalculator incomeCalculator;
     private final EducationCalculator educationCalculator;
@@ -24,14 +24,9 @@ public class PersonScoringCalculator {
         int marrScore = maritalStatusCalculator.getMaritalStatusScore(person);
         int edScore = educationCalculator.getEducationScore(person);
 
-        int score = incScore + marrScore + edScore;
+        int score = incScore + marrScore + edScore + addAdditionalPoints(person);
         log.info("Calculated scoring = "+score+" points");
         return score;
     }
-
-
-
-
-
-
+    protected abstract int addAdditionalPoints(Person person);
 }

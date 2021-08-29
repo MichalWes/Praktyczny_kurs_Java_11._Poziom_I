@@ -1,6 +1,6 @@
 package pl.javaskills.creditapp.core.model;
 
-public class Person {
+public abstract class Person {
     private final PersonalData personalData;
     private final FinanceData financeData;
     private final ContactData contactData;
@@ -9,38 +9,6 @@ public class Person {
         this.personalData = personalData;
         this.financeData = financeData;
         this.contactData = contactData;
-    }
-
-    public static class Builder{
-        private PersonalData personalData;
-        private FinanceData financeData;
-        private ContactData contactData;
-
-        private Builder(){
-        }
-
-        public static Builder create(){
-            return new Builder();
-        }
-
-        public Builder withPersonalData(PersonalData personalData){
-            this.personalData = personalData;
-            return this;
-        }
-
-        public Builder withFinanceData(FinanceData financeData){
-            this.financeData = financeData;
-            return this;
-        }
-
-        public Builder withContactData(ContactData contactData){
-            this.contactData = contactData;
-            return this;
-        }
-
-        public Person build(){
-            return new Person(personalData, financeData, contactData);
-        }
     }
 
     public PersonalData getPersonalData() {
