@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import pl.javaskills.creditapp.core.model.LoanApplication;
+import pl.javaskills.creditapp.core.model.Person;
+
 import java.util.UUID;
 import static pl.javaskills.creditapp.core.Constants.*;
 import static pl.javaskills.creditapp.core.DecisionType.*;
@@ -22,7 +24,8 @@ public class CreditApplicationService {
         String id = UUID.randomUUID().toString();
         log.info("Application ID is "+id);
         MDC.put("id", id);
-        int score = personScoringCalculatorFactory.getCalculator(loanApplication.getPerson()).calculate(loanApplication.getPerson());
+        Person person = loanApplication.getPerson();
+        int score = personScoringCalculatorFactory.getCalculator(person).calculate(person);
         double creditRating = calculator.getCreditRating(loanApplication);
         DecisionType decisionType ;
 

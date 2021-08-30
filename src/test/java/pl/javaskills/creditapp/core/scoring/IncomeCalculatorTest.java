@@ -16,7 +16,7 @@ class IncomeCalculatorTest {
         //given
         Person person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, (byte)1);
         //when
-        int scoring = cut.getIncomeScore(person);
+        int scoring = cut.calculate(person);
         //then
         assertEquals(600, scoring);
     }

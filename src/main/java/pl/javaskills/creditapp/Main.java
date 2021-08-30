@@ -11,9 +11,8 @@ public class Main {
 
     public static void main(String[] args) {
         LoanApplication loanApplication = new ConsoleReader().readInputParameters();
-        NaturalPersonScoringCalculator naturalPersonScoringCalculator = new NaturalPersonScoringCalculator(new IncomeCalculator(), new EducationCalculator(), new MaritalStatusCalculator());
-        SelfEmployedScoringCalculator selfEmployedScoringCalculator = new SelfEmployedScoringCalculator(new IncomeCalculator(), new EducationCalculator(), new MaritalStatusCalculator());
-        CreditApplicationService creditApplicationService = new CreditApplicationService(new PersonScoringCalculatorFactory(naturalPersonScoringCalculator, selfEmployedScoringCalculator), new CreditRatingCalculator());
+        PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator());
+        CreditApplicationService creditApplicationService = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator());
         CreditApplicationDecision decision = creditApplicationService.getDecision(loanApplication);
         System.out.println(decision.getDecisionString());
     }

@@ -6,9 +6,11 @@ import pl.javaskills.creditapp.core.model.Education;
 import pl.javaskills.creditapp.core.model.Person;
 
 
-public class EducationCalculator {
+public class EducationCalculator implements PersonCalculator {
     private static final Logger log = LoggerFactory.getLogger(EducationCalculator.class);
-    public int getEducationScore(Person person) {
+
+    @Override
+    public int calculate(Person person) {
         Education education = person.getPersonalData().getEducation();
         int score = education.getScore();
         log.info("Education = "+education+ScoringUtils.getPointsString(score));

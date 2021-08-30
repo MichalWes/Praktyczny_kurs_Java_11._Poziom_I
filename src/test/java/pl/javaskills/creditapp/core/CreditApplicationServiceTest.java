@@ -9,6 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.javaskills.creditapp.core.model.*;
+import pl.javaskills.creditapp.core.scoring.CompoundScoringCalculator;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -17,12 +18,12 @@ import static pl.javaskills.creditapp.core.DecisionType.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreditApplicationServiceTest {
-    //calculatorMock = Mockito.mock(PersonScoringCalculator.class);
+
     @InjectMocks
     private CreditApplicationService cut;
 
     @Mock
-    private PersonScoringCalculator calculatorMock;
+    private CompoundScoringCalculator calculatorMock;
 
     @Mock
     private PersonScoringCalculatorFactory personScoringCalculatorFactoryMock;

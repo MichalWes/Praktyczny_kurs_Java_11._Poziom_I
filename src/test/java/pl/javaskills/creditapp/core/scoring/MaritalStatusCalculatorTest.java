@@ -20,7 +20,7 @@ class MaritalStatusCalculatorTest {
     public void test1(MaritalStatus maritalStatus){
         //given
         Person person = PersonTestFactory.create(maritalStatus);
-        int scoring = cut.getMaritalStatusScore(person);
+        int scoring = cut.calculate(person);
         //then
         assertEquals(maritalStatus.getScore(), scoring);
     }

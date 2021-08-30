@@ -6,9 +6,10 @@ import pl.javaskills.creditapp.core.model.MaritalStatus;
 import pl.javaskills.creditapp.core.model.Person;
 
 
-public class MaritalStatusCalculator {
+public class MaritalStatusCalculator implements PersonCalculator{
     private static final Logger log = LoggerFactory.getLogger(MaritalStatusCalculator.class);
-    public int getMaritalStatusScore(Person person) {
+    @Override
+    public int calculate(Person person) {
         MaritalStatus maritalStatus= person.getPersonalData().getMaritalStatus();
         int score = maritalStatus.getScore();
         log.info("Marital status = "+maritalStatus+ScoringUtils.getPointsString(score));
