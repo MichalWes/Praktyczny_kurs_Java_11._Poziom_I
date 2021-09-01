@@ -2,17 +2,11 @@ package pl.javaskills.creditapp.core;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.BDDMockito;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import pl.javaskills.creditapp.core.model.*;
 import pl.javaskills.creditapp.core.scoring.EducationCalculator;
 import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
 import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
-
-import java.math.BigDecimal;
+import pl.javaskills.creditapp.core.validation.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
@@ -21,7 +15,7 @@ import static pl.javaskills.creditapp.core.DecisionType.*;
 class CreditApplicationServiceBDDTest {
 
     PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator());
-    private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator());
+    private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new PersonValidator(new PersonalDataValidator(),new ContactDataValidator(),new FinanceDataValidator()),new PurposeOfLoanValidator()));
 
     @Test
     @DisplayName("Should return NEGATIVE_REQUIREMENTS_NOT_MET when scoring is >= 400 and requested loan amount lower than 100000")
@@ -29,12 +23,38 @@ class CreditApplicationServiceBDDTest {
         //given
         PersonalData personalData = PersonalData.Builder
                 .create()
-                .withName("test")
-                .withLastName("test")
-                .withMothersMaidenName("test")
+                .withName("Testtest")
+                .withLastName("Testtest")
+                .withMothersMaidenName("Testtest")
                 .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.MARRIED)
+                .build();
+
+        Address homeAddress = Address.Builder
+                .create()
+                .withStreet("Lipowa")
+                .withHouseNumber("3")
+                .withZipCode("80-500")
+                .withCity("Gdańsk")
+                .withState("Pomorskie")
+                .build();
+
+        Address correspondeceAddress = Address.Builder
+                .create()
+                .withStreet("Lipowa")
+                .withHouseNumber("3")
+                .withZipCode("80-500")
+                .withCity("Gdańsk")
+                .withState("Pomorskie")
+                .build();
+
+        ContactData contactData = ContactData.Builder
+                .create()
+                .withEmail("halko@wp.pl")
+                .withPhoneNumber("+48959599599")
+                .withHomeAddress(homeAddress)
+                .withCorrespondeceAddress(correspondeceAddress)
                 .build();
 
         SourceOfIncome source1 = SourceOfIncome.Builder
@@ -48,12 +68,13 @@ class CreditApplicationServiceBDDTest {
                 .withSourcesOfIncome(source1)
                 .build();
 
+
         NaturalPerson person = NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
-                .withContactData(null)
-                .withPesel(null)
+                .withContactData(contactData)
+                .withPesel("828382838238")
                 .build();
 
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder
@@ -80,12 +101,38 @@ class CreditApplicationServiceBDDTest {
         //given
         PersonalData personalData = PersonalData.Builder
                 .create()
-                .withName("test")
-                .withLastName("test")
-                .withMothersMaidenName("test")
+                .withName("Testtest")
+                .withLastName("Testtest")
+                .withMothersMaidenName("Testtest")
                 .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.MARRIED)
+                .build();
+
+        Address homeAddress = Address.Builder
+                .create()
+                .withStreet("Lipowa")
+                .withHouseNumber("3")
+                .withZipCode("80-500")
+                .withCity("Gdańsk")
+                .withState("Pomorskie")
+                .build();
+
+        Address correspondeceAddress = Address.Builder
+                .create()
+                .withStreet("Lipowa")
+                .withHouseNumber("3")
+                .withZipCode("80-500")
+                .withCity("Gdańsk")
+                .withState("Pomorskie")
+                .build();
+
+        ContactData contactData = ContactData.Builder
+                .create()
+                .withEmail("halko@wp.pl")
+                .withPhoneNumber("+48959599599")
+                .withHomeAddress(homeAddress)
+                .withCorrespondeceAddress(correspondeceAddress)
                 .build();
 
         SourceOfIncome source1 = SourceOfIncome.Builder
@@ -103,9 +150,9 @@ class CreditApplicationServiceBDDTest {
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
-                .withContactData(null)
-                .withNip(null)
-                .withRegon(null)
+                .withContactData(contactData)
+                .withNip("43543545")
+                .withRegon("43434343")
                 .withYearsSinceFounded(1)
                 .build();
 
@@ -133,12 +180,38 @@ class CreditApplicationServiceBDDTest {
         //given
         PersonalData personalData = PersonalData.Builder
                 .create()
-                .withName("test")
-                .withLastName("test")
-                .withMothersMaidenName("test")
+                .withName("Testtest")
+                .withLastName("Testtest")
+                .withMothersMaidenName("Testtest")
                 .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.MARRIED)
+                .build();
+
+        Address homeAddress = Address.Builder
+                .create()
+                .withStreet("Lipowa")
+                .withHouseNumber("3")
+                .withZipCode("80-500")
+                .withCity("Gdańsk")
+                .withState("Pomorskie")
+                .build();
+
+        Address correspondeceAddress = Address.Builder
+                .create()
+                .withStreet("Lipowa")
+                .withHouseNumber("3")
+                .withZipCode("80-500")
+                .withCity("Gdańsk")
+                .withState("Pomorskie")
+                .build();
+
+        ContactData contactData = ContactData.Builder
+                .create()
+                .withEmail("halko@wp.pl")
+                .withPhoneNumber("+48959599599")
+                .withHomeAddress(homeAddress)
+                .withCorrespondeceAddress(correspondeceAddress)
                 .build();
 
         SourceOfIncome source1 = SourceOfIncome.Builder
@@ -156,7 +229,7 @@ class CreditApplicationServiceBDDTest {
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
-                .withContactData(null)
+                .withContactData(contactData)
                 .withNip(null)
                 .withRegon(null)
                 .withYearsSinceFounded(3)
