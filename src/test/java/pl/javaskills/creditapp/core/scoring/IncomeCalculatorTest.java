@@ -14,7 +14,7 @@ class IncomeCalculatorTest {
     @DisplayName("Should return calculated income score")
     public void test1(){
         //given
-        Person person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, (byte)1);
+        Person person = PersonTestFactory.create(3000.0, 1000.0, 1000.0);
         //when
         int scoring = cut.calculate(person);
         //then

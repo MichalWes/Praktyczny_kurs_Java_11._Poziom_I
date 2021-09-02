@@ -21,7 +21,7 @@ public class PersonalDataValidator implements Validator{
         ValidationUtils.validateRegex("Mother's Maiden Name",personalData.getMothersMaidenName(), LAST_NAME_REGEX2);
         ValidationUtils.validateNotNull("Education",personalData.getEducation());
         ValidationUtils.validateNotNull("Marital Status",personalData.getMaritalStatus());
-        ValidationUtils.validateMinValue("Number Of Family Dependants",1, personalData.getNumOfFamilyDependants());
+        ValidationUtils.validateMinValue("Number Of Family Dependants",1, loanApplication.getPerson().getFamilyMembers().size());
 
     }
 }

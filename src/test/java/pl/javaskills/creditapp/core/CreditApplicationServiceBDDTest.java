@@ -8,6 +8,9 @@ import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
 import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
 import pl.javaskills.creditapp.core.validation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static pl.javaskills.creditapp.core.DecisionType.*;
@@ -26,7 +29,6 @@ class CreditApplicationServiceBDDTest {
                 .withName("Testtest")
                 .withLastName("Testtest")
                 .withMothersMaidenName("Testtest")
-                .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.MARRIED)
                 .build();
@@ -68,12 +70,26 @@ class CreditApplicationServiceBDDTest {
                 .withSourcesOfIncome(source1)
                 .build();
 
+        List<FamilyMember> familyMembers = new ArrayList<>();
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Andrzej")
+                .withAge(20)
+                .build());
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Zdzisław")
+                .withAge(27)
+                .build());
 
         NaturalPerson person = NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
                 .withContactData(contactData)
+                .withFamilyMembers(familyMembers)
                 .withPesel("828382838238")
                 .build();
 
@@ -104,7 +120,6 @@ class CreditApplicationServiceBDDTest {
                 .withName("Testtest")
                 .withLastName("Testtest")
                 .withMothersMaidenName("Testtest")
-                .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.MARRIED)
                 .build();
@@ -146,11 +161,26 @@ class CreditApplicationServiceBDDTest {
                 .withSourcesOfIncome(source1)
                 .build();
 
+        List<FamilyMember> familyMembers = new ArrayList<>();
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Andrzej")
+                .withAge(20)
+                .build());
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Zdzisław")
+                .withAge(27)
+                .build());
+
         SelfEmployed person = SelfEmployed.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
                 .withContactData(contactData)
+                .withFamilyMembers(familyMembers)
                 .withNip("43543545")
                 .withRegon("43434343")
                 .withYearsSinceFounded(1)
@@ -183,7 +213,6 @@ class CreditApplicationServiceBDDTest {
                 .withName("Testtest")
                 .withLastName("Testtest")
                 .withMothersMaidenName("Testtest")
-                .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.MARRIED)
                 .build();
@@ -225,11 +254,26 @@ class CreditApplicationServiceBDDTest {
                 .withSourcesOfIncome(source1)
                 .build();
 
+        List<FamilyMember> familyMembers = new ArrayList<>();
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Andrzej")
+                .withAge(20)
+                .build());
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Zdzisław")
+                .withAge(27)
+                .build());
+
         SelfEmployed person = SelfEmployed.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
                 .withContactData(contactData)
+                .withFamilyMembers(familyMembers)
                 .withNip(null)
                 .withRegon(null)
                 .withYearsSinceFounded(3)

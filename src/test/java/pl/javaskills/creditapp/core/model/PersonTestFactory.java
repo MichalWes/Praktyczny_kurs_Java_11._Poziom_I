@@ -1,5 +1,8 @@
 package pl.javaskills.creditapp.core.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PersonTestFactory {
 
     public static NaturalPerson create(MaritalStatus maritalStatus) {
@@ -8,7 +11,6 @@ public class PersonTestFactory {
                 .withName("test")
                 .withLastName("test")
                 .withMothersMaidenName("test")
-                .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(maritalStatus)
                 .build();
@@ -40,13 +42,12 @@ public class PersonTestFactory {
     }
 
 
-    public static NaturalPerson create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3 ,byte numOfFamilyDependants) {
+    public static NaturalPerson create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3) {
         PersonalData personalData = PersonalData.Builder
                 .create()
                 .withName("test")
                 .withLastName("test")
                 .withMothersMaidenName("test")
-                .withNumOfFamilyDependants(numOfFamilyDependants)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.SEPARATED)
                 .build();
@@ -69,11 +70,20 @@ public class PersonTestFactory {
                 .withSourcesOfIncome(source1, source2, source3)
                 .build();
 
+        List<FamilyMember> familyMembers = new ArrayList<>();
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Andrzej")
+                .withAge(20)
+                .build());
+
         return NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
                 .withContactData(null)
+                .withFamilyMembers(familyMembers)
                 .build();
     }
 
@@ -83,7 +93,6 @@ public class PersonTestFactory {
                 .withName("test")
                 .withLastName("test")
                 .withMothersMaidenName("test")
-                .withNumOfFamilyDependants(2)
                 .withEducation(education)
                 .withMaritalStatus(MaritalStatus.SEPARATED)
                 .build();
@@ -120,7 +129,6 @@ public class PersonTestFactory {
                 .withName("test")
                 .withLastName("test")
                 .withMothersMaidenName("test")
-                .withNumOfFamilyDependants(2)
                 .withEducation(Education.MIDDLE)
                 .withMaritalStatus(MaritalStatus.SEPARATED)
                 .build();
@@ -151,13 +159,12 @@ public class PersonTestFactory {
                 .build();
     }
 
-        public static NaturalPerson create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3, int numOfFamilyDependants, Education education, MaritalStatus maritalStatus){
+        public static NaturalPerson create(double monthlyIncomePLN1, double monthlyIncomePLN2, double monthlyIncomePLN3, List<FamilyMember> familyMembers, Education education, MaritalStatus maritalStatus){
             PersonalData personalData = PersonalData.Builder
                     .create()
                     .withName("test")
                     .withLastName("test")
                     .withMothersMaidenName("test")
-                    .withNumOfFamilyDependants(numOfFamilyDependants)
                     .withEducation(education)
                     .withMaritalStatus(maritalStatus)
                     .build();
@@ -184,6 +191,7 @@ public class PersonTestFactory {
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
+                .withFamilyMembers(familyMembers)
                 .withContactData(null)
                 .build();
     }

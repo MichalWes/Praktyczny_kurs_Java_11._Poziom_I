@@ -2,6 +2,9 @@ package pl.javaskills.creditapp.client;
 
 import pl.javaskills.creditapp.core.model.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DummyCreditApplicationReader implements CreditApplicationReader {
 
     @Override
@@ -14,7 +17,6 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
                 .withMothersMaidenName("Wiedenska")
                 .withMaritalStatus(MaritalStatus.MARRIED)
                 .withEducation(Education.MIDDLE)
-                .withNumOfFamilyDependants(2)
                 .build();
 
         Address homeAddress = Address.Builder
@@ -53,7 +55,7 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
         SourceOfIncome sourceOfIncome = SourceOfIncome.Builder
                 .create()
                 .withIncomeType(IncomeType.SELF_EMPLOYMENT)
-                .withNetMontlyIncome(10000)
+                .withNetMontlyIncome(20000)
                 .build();
 
         FinanceData financeData = FinanceData.Builder
@@ -61,12 +63,42 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
                 .withSourcesOfIncome(sourceOfIncome)
                 .build();
 
+        List<FamilyMember> familyMembers = new ArrayList<>();
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Andrzej")
+                .withAge(20)
+                .build());
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Zdzisław")
+                .withAge(27)
+                .build());
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Alicja")
+                .withAge(34)
+                .build());
+
+        familyMembers.add(FamilyMember.Builder
+                .create()
+                .withName("Monstrancja")
+                .withAge(56)
+                .build());
+
         NaturalPerson person = NaturalPerson.Builder
                 .create()
                 .withPersonalData(personalData)
                 .withFinanceData(financeData)
                 .withContactData(contactData)
+                .withFamilyMembers(familyMembers)
                 .build();
+
+        System.out.println(person.getFamilyMembers());
+        System.out.println(person.getFamilyMembersSortedByName());
 
         return new LoanApplication(person, purposeOfLoan);
     }

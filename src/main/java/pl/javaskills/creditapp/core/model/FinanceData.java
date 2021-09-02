@@ -1,22 +1,24 @@
 package pl.javaskills.creditapp.core.model;
 
+import java.util.List;
+
 public class FinanceData {
 
-    private final SourceOfIncome[] sourcesOfIncome;
+    private final List<SourceOfIncome> sourcesOfIncome;
 
-    private FinanceData(SourceOfIncome[] sourcesOfIncome) {
+    private FinanceData(List<SourceOfIncome> sourcesOfIncome) {
         this.sourcesOfIncome = sourcesOfIncome;
     }
 
     public static class Builder {
-        private SourceOfIncome[] sourcesOfIncome;
+        private List<SourceOfIncome> sourcesOfIncome;
 
         public static Builder create(){
             return new Builder();
         }
 
         public Builder withSourcesOfIncome(SourceOfIncome... sourcesOfIncome){
-            this.sourcesOfIncome = sourcesOfIncome;
+            this.sourcesOfIncome = List.of(sourcesOfIncome); //Arrays.asList
             return this;
         }
 
@@ -25,7 +27,7 @@ public class FinanceData {
         }
     }
 
-    public SourceOfIncome[] getSourcesOfIncome() {
+    public List<SourceOfIncome> getSourcesOfIncome() {
         return sourcesOfIncome;
     }
 
