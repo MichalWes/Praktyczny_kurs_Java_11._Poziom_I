@@ -1,7 +1,7 @@
 package pl.javaskills.creditapp.core.validation;
 
 import pl.javaskills.creditapp.core.exception.ValidationException;
-import pl.javaskills.creditapp.core.model.LoanApplication;
+import pl.javaskills.creditapp.core.model.CreditApplication;
 
 public class CreditApplicationValidator implements Validator{
     private final PersonValidator personValidator;
@@ -13,10 +13,10 @@ public class CreditApplicationValidator implements Validator{
     }
 
     @Override
-    public void validate(LoanApplication loanApplication) throws ValidationException {
-        ValidationUtils.validateNotNull("Person", loanApplication.getPerson());
-        personValidator.validate(loanApplication);
-        ValidationUtils.validateNotNull("Purpose of loan", loanApplication.getPurposeOfLoan());
-        purposeOfLoanValidator.validate(loanApplication);
+    public void validate(CreditApplication creditApplication) throws ValidationException {
+        ValidationUtils.validateNotNull("Person", creditApplication.getPerson());
+        personValidator.validate(creditApplication);
+        ValidationUtils.validateNotNull("Purpose of loan", creditApplication.getPurposeOfLoan());
+        purposeOfLoanValidator.validate(creditApplication);
     }
 }

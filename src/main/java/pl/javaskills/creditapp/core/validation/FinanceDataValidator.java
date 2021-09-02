@@ -1,17 +1,13 @@
 package pl.javaskills.creditapp.core.validation;
 
 import pl.javaskills.creditapp.core.exception.ValidationException;
-import pl.javaskills.creditapp.core.model.ContactData;
 import pl.javaskills.creditapp.core.model.FinanceData;
-import pl.javaskills.creditapp.core.model.LoanApplication;
-
-import static pl.javaskills.creditapp.core.Constants.EMAIL_REGEX;
-import static pl.javaskills.creditapp.core.Constants.PHONE_NUMBER_REGEX;
+import pl.javaskills.creditapp.core.model.CreditApplication;
 
 public class FinanceDataValidator implements Validator {
     @Override
-    public void validate(LoanApplication loanApplication) throws ValidationException {
-        FinanceData financeData = loanApplication.getPerson().getFinanceData();
+    public void validate(CreditApplication creditApplication) throws ValidationException {
+        FinanceData financeData = creditApplication.getPerson().getFinanceData();
 
         ValidationUtils.validateNotNull("Total Income", financeData.getTotalIncome());
         ValidationUtils.validateMinValue("Min Total Income", 0, financeData.getTotalIncome());

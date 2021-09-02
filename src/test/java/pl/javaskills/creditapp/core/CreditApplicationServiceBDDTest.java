@@ -100,10 +100,10 @@ class CreditApplicationServiceBDDTest {
                 .withAmount(50000)
                 .build();
 
-        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(person, purposeOfLoan);
+        CreditApplication creditApplication = CreditApplicationServiceTestFactory.create(person, purposeOfLoan);
 
         //when
-        CreditApplicationDecision decision = cut.getDecision(loanApplication);
+        CreditApplicationDecision decision = cut.getDecision(creditApplication);
         DecisionType decisionType = decision.getDecisionType();
         //then
         assertEquals(NEGATIVE_REQUIREMENTS_NOT_MET,decisionType);
@@ -193,10 +193,10 @@ class CreditApplicationServiceBDDTest {
                 .withAmount(500000)
                 .build();
 
-        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(person, purposeOfLoan);
+        CreditApplication creditApplication = CreditApplicationServiceTestFactory.create(person, purposeOfLoan);
 
         //when
-        CreditApplicationDecision decision = cut.getDecision(loanApplication);
+        CreditApplicationDecision decision = cut.getDecision(creditApplication);
         DecisionType decisionType = decision.getDecisionType();
         //then
         assertEquals(NEGATIVE_SCORING,decisionType);
@@ -286,10 +286,10 @@ class CreditApplicationServiceBDDTest {
                 .withAmount(500000)
                 .build();
 
-        LoanApplication loanApplication = CreditApplicationServiceTestFactory.create(person, purposeOfLoan);
+        CreditApplication creditApplication = CreditApplicationServiceTestFactory.create(person, purposeOfLoan);
 
         //when
-        CreditApplicationDecision decision = cut.getDecision(loanApplication);
+        CreditApplicationDecision decision = cut.getDecision(creditApplication);
         DecisionType decisionType = decision.getDecisionType();
         //then
         assertEquals(CONTACT_REQUIRED,decisionType);

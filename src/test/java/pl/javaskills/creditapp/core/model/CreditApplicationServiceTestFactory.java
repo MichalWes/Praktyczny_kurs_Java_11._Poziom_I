@@ -5,15 +5,15 @@ import java.util.List;
 
 public class CreditApplicationServiceTestFactory {
 
-   public static LoanApplication create(NaturalPerson person, PurposeOfLoan purposeOfLoan) {
-       return new LoanApplication(person, purposeOfLoan);
+   public static CreditApplication create(NaturalPerson person, PurposeOfLoan purposeOfLoan) {
+       return new CreditApplication(person, purposeOfLoan);
    }
 
-    public static LoanApplication create(SelfEmployed person, PurposeOfLoan purposeOfLoan) {
-        return new LoanApplication(person, purposeOfLoan);
+    public static CreditApplication create(SelfEmployed person, PurposeOfLoan purposeOfLoan) {
+        return new CreditApplication(person, purposeOfLoan);
     }
 
-    public static LoanApplication create(){
+    public static CreditApplication create(){
 
         List<FamilyMember> familyMembers = new ArrayList<>();
 
@@ -30,11 +30,11 @@ public class CreditApplicationServiceTestFactory {
                 .build());
 
        NaturalPerson person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, familyMembers, Education.MIDDLE, MaritalStatus.SEPARATED);
-       return new LoanApplication(person, null);
+       return new CreditApplication(person, null);
 
     }
 
-    public static LoanApplication create(double amount){
+    public static CreditApplication create(double amount){
 
         List<FamilyMember> familyMembers = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class CreditApplicationServiceTestFactory {
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder.create()
                 .withAmount(amount)
                 .build();
-        return new LoanApplication(person, purposeOfLoan);
+        return new CreditApplication(person, purposeOfLoan);
     }
 
 

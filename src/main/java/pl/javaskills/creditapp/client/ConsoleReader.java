@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class ConsoleReader implements CreditApplicationReader {
 
     @Override
-    public LoanApplication read(){
+    public CreditApplication read(){
         Scanner in = new Scanner(System.in);
         String name = getName(in);
         String lastName = getLastName(in);
@@ -93,7 +93,7 @@ public class ConsoleReader implements CreditApplicationReader {
                 .withContactData(contactData)
                 .build();
 
-        return new LoanApplication(person, purposeOfLoan);
+        return new CreditApplication(person, purposeOfLoan);
     }
 
     private String getName(Scanner in) {

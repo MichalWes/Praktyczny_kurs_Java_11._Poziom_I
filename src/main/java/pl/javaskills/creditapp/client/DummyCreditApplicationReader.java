@@ -8,7 +8,7 @@ import java.util.List;
 public class DummyCreditApplicationReader implements CreditApplicationReader {
 
     @Override
-    public LoanApplication read() {
+    public CreditApplication read() {
 
         PersonalData personalData = PersonalData.Builder
                 .create()
@@ -100,6 +100,6 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
         System.out.println(person.getFamilyMembers());
         System.out.println(person.getFamilyMembersSortedByName());
 
-        return new LoanApplication(person, purposeOfLoan);
+        return new CreditApplication(person, purposeOfLoan);
     }
 }

@@ -1,7 +1,7 @@
 package pl.javaskills.creditapp.core.validation;
 
 import pl.javaskills.creditapp.core.exception.ValidationException;
-import pl.javaskills.creditapp.core.model.LoanApplication;
+import pl.javaskills.creditapp.core.model.CreditApplication;
 
 public class PersonValidator implements Validator{
     private final PersonalDataValidator personalDataValidator;
@@ -16,12 +16,12 @@ public class PersonValidator implements Validator{
     }
 
     @Override
-    public void validate(LoanApplication loanApplication) throws ValidationException {
-        ValidationUtils.validateNotNull("Personal Data", loanApplication.getPerson().getPersonalData());
-        personalDataValidator.validate(loanApplication);
-        ValidationUtils.validateNotNull("Contact Data", loanApplication.getPerson().getContactData());
-        contactDataValidator.validate(loanApplication);
-        ValidationUtils.validateNotNull("Finance Data", loanApplication.getPerson().getFinanceData());
-        financeDataValidator.validate(loanApplication);
+    public void validate(CreditApplication creditApplication) throws ValidationException {
+        ValidationUtils.validateNotNull("Personal Data", creditApplication.getPerson().getPersonalData());
+        personalDataValidator.validate(creditApplication);
+        ValidationUtils.validateNotNull("Contact Data", creditApplication.getPerson().getContactData());
+        contactDataValidator.validate(creditApplication);
+        ValidationUtils.validateNotNull("Finance Data", creditApplication.getPerson().getFinanceData());
+        financeDataValidator.validate(creditApplication);
     }
 }
