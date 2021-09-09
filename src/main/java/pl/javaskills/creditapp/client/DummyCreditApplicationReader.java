@@ -2,8 +2,7 @@ package pl.javaskills.creditapp.client;
 
 import pl.javaskills.creditapp.core.model.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DummyCreditApplicationReader implements CreditApplicationReader {
 
@@ -97,9 +96,25 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
                 .withFamilyMembers(familyMembers)
                 .build();
 
+        Guarantor guarantor1 = Guarantor.Builder
+                .create()
+                .withPesel("95222535353")
+                .withAge(25)
+                .build();
+
+        Guarantor guarantor2 = Guarantor.Builder
+                .create()
+                .withPesel("95222535332")
+                .withAge(45)
+                .build();
+
+        Set<Guarantor> guarantors = new TreeSet<>();
+        guarantors.add(guarantor1);
+        guarantors.add(guarantor2);
+
         System.out.println(person.getFamilyMembers());
         System.out.println(person.getFamilyMembersSortedByName());
 
-        return new CreditApplication(person, purposeOfLoan);
+        return new CreditApplication(person, purposeOfLoan, guarantors);
     }
 }

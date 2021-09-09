@@ -3,7 +3,9 @@ package pl.javaskills.creditapp.client;
 import pl.javaskills.creditapp.core.Constants;
 import pl.javaskills.creditapp.core.model.*;
 
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ConsoleReader implements CreditApplicationReader {
 
@@ -93,7 +95,16 @@ public class ConsoleReader implements CreditApplicationReader {
                 .withContactData(contactData)
                 .build();
 
-        return new CreditApplication(person, purposeOfLoan);
+        Guarantor guarantor = Guarantor.Builder
+                .create()
+                .withPesel("95222535353")
+                .withAge(25)
+                .build();
+
+        Set<Guarantor> guarantors = new HashSet<>();
+        guarantors.add(guarantor);
+
+        return new CreditApplication(person, purposeOfLoan, guarantors);
     }
 
     private String getName(Scanner in) {

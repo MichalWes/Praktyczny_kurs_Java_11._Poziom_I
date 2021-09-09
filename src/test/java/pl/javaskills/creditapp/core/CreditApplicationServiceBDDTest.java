@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.javaskills.creditapp.core.model.*;
 import pl.javaskills.creditapp.core.scoring.EducationCalculator;
+import pl.javaskills.creditapp.core.scoring.GuarantorsCalculator;
 import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
 import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
 import pl.javaskills.creditapp.core.validation.*;
@@ -17,8 +18,8 @@ import static pl.javaskills.creditapp.core.DecisionType.*;
 
 class CreditApplicationServiceBDDTest {
 
-    PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator());
-    private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new PersonValidator(new PersonalDataValidator(),new ContactDataValidator(),new FinanceDataValidator()),new PurposeOfLoanValidator()));
+    PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
+    private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new PersonValidator(new PersonalDataValidator(),new ContactDataValidator(),new FinanceDataValidator()),new PurposeOfLoanValidator(), new GuarantorValidator()));
 
     @Test
     @DisplayName("Should return NEGATIVE_REQUIREMENTS_NOT_MET when scoring is >= 400 and requested loan amount lower than 100000")

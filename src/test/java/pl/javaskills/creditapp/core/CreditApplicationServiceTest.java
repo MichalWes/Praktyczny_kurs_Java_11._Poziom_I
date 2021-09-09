@@ -48,7 +48,7 @@ class CreditApplicationServiceTest {
     public void test1(){
         //given
         CreditApplication creditApplication = CreditApplicationServiceTestFactory.create();
-        BDDMockito.given(calculatorMock.calculate(eq(creditApplication.getPerson()))).willReturn(100);
+        BDDMockito.given(calculatorMock.calculate(eq(creditApplication))).willReturn(100);
         //when
         CreditApplicationDecision decision = cut.getDecision(creditApplication);
         //then
@@ -59,7 +59,7 @@ class CreditApplicationServiceTest {
     public void test2(){
         //given
         CreditApplication creditApplication = CreditApplicationServiceTestFactory.create();
-        BDDMockito.given(calculatorMock.calculate(eq(creditApplication.getPerson()))).willReturn(350);
+        BDDMockito.given(calculatorMock.calculate(eq(creditApplication))).willReturn(350);
         //when
         CreditApplicationDecision decision = cut.getDecision(creditApplication);
         //then
@@ -70,7 +70,7 @@ class CreditApplicationServiceTest {
     public void test3(){
         //given
         CreditApplication creditApplication = CreditApplicationServiceTestFactory.create(300000.0);
-        BDDMockito.given(calculatorMock.calculate(eq(creditApplication.getPerson()))).willReturn(450);
+        BDDMockito.given(calculatorMock.calculate(eq(creditApplication))).willReturn(450);
         BDDMockito.given(creditRatingCalculatorMock.getCreditRating(eq(creditApplication))).willReturn(250000.0);
         //when
         CreditApplicationDecision decision = cut.getDecision(creditApplication);
@@ -82,7 +82,7 @@ class CreditApplicationServiceTest {
     public void test4(){
         //given
         CreditApplication creditApplication = CreditApplicationServiceTestFactory.create(100000.0);
-        BDDMockito.given(calculatorMock.calculate(eq(creditApplication.getPerson()))).willReturn(450);
+        BDDMockito.given(calculatorMock.calculate(eq(creditApplication))).willReturn(450);
         BDDMockito.given(creditRatingCalculatorMock.getCreditRating(eq(creditApplication))).willReturn(250000.0);
         //when
         CreditApplicationDecision decision = cut.getDecision(creditApplication);

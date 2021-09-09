@@ -10,7 +10,7 @@ import java.util.Deque;
 
 public class CreditApplicationManager {
 
-    private static final Logger log = LoggerFactory.getLogger(CreditApplicationService.class);
+    private static final Logger log = LoggerFactory.getLogger(CreditApplicationManager.class);
     private final CreditApplicationService creditApplicationService;
     private final Deque<CreditApplication> queue= new ArrayDeque<>();
 

@@ -31,7 +31,7 @@ public class CreditApplicationService {
             creditApplicationValidator.validate(creditApplication);
 
             Person person = creditApplication.getPerson();
-            int score = personScoringCalculatorFactory.getCalculator(person).calculate(person);
+            int score = personScoringCalculatorFactory.getCalculator(person).calculate(creditApplication);
             double creditRating = calculator.getCreditRating(creditApplication);
             DecisionType decisionType;
 
