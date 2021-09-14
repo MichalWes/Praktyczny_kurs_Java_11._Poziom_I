@@ -30,9 +30,23 @@ public abstract class Person {
         return contactData;
     }
 
+
+    public double getBalance() {
+        double expenses = 0.0;
+        double balance = this.getFinanceData().getTotalIncome();
+
+        if (financeData.getExpenses().isEmpty()) {
+            return balance;
+        } else {
+            for (Expense expense : financeData.getExpenses()) {
+                expenses += expense.getAmount();
+            }
+        }
+        return balance - expenses;
+    }
+
     public double getIncomePerFamilyMember() {
-        double incomePerFamilyMember = this.getFinanceData().getTotalIncome()/this.familyMembers.size();
-        return incomePerFamilyMember;
+        return getBalance() / this.familyMembers.size();
     }
 
     public List<FamilyMember> getFamilyMembers() {
@@ -40,7 +54,7 @@ public abstract class Person {
         return familyMembers;
     }
 
-    public List<FamilyMember> getFamilyMembersSortedByName(){
+    public List<FamilyMember> getFamilyMembersSortedByName() {
         List<FamilyMember> copy = new ArrayList<>(this.familyMembers);
         Collections.sort(copy, new FamilyMemberNameComparator());
         return copy;

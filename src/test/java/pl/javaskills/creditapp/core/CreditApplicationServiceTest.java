@@ -8,14 +8,15 @@ import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.javaskills.creditapp.core.exception.RequirementNotMetException;
 import pl.javaskills.creditapp.core.exception.ValidationException;
 import pl.javaskills.creditapp.core.model.*;
 import pl.javaskills.creditapp.core.scoring.CompoundScoringCalculator;
+import pl.javaskills.creditapp.core.validation.CompoundPostValidator;
 import pl.javaskills.creditapp.core.validation.CreditApplicationValidator;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,10 +37,14 @@ class CreditApplicationServiceTest {
     @Mock
     private CreditRatingCalculator creditRatingCalculatorMock;
 
+    @Mock
+    private CompoundPostValidator compoundPostValidatorMock;
+
     @BeforeEach
-    public void init() throws ValidationException {
+    public void init() throws ValidationException, RequirementNotMetException {
         BDDMockito.given(personScoringCalculatorFactoryMock.getCalculator(any(Person.class))).willReturn(calculatorMock);
         BDDMockito.doNothing().when(creditApplicationValidatorMock).validate(any(CreditApplication.class));
+        BDDMockito.doNothing().when(compoundPostValidatorMock).validate(any(CreditApplication.class), anyInt(), anyDouble());
     }
 
 
@@ -87,6 +92,6 @@ class CreditApplicationServiceTest {
         //when
         CreditApplicationDecision decision = cut.getDecision(creditApplication);
         //then
-        assertEquals(NEGATIVE_REQUIREMENTS_NOT_MET, decision.getDecisionType());
+        assertEquals(POSITIVE, decision.getDecisionType());
     }
 }

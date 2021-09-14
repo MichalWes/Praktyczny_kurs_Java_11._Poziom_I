@@ -60,7 +60,7 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
         FinanceData financeData = FinanceData.Builder
                 .create()
                 .withSourcesOfIncome(sourceOfIncome)
-                .build();
+                .buildWithoutExpenses();
 
         List<FamilyMember> familyMembers = new ArrayList<>();
 

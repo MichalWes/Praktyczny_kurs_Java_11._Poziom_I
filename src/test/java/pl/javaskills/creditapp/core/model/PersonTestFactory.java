@@ -31,7 +31,7 @@ public class PersonTestFactory {
         FinanceData financeData = FinanceData.Builder
                 .create()
                 .withSourcesOfIncome(source1, source2, source3)
-                .build();
+                .buildWithoutExpenses();
 
         return NaturalPerson.Builder
                 .create()
@@ -68,7 +68,7 @@ public class PersonTestFactory {
         FinanceData financeData = FinanceData.Builder
                 .create()
                 .withSourcesOfIncome(source1, source2, source3)
-                .build();
+                .buildWithoutExpenses();
 
         List<FamilyMember> familyMembers = new ArrayList<>();
 
@@ -113,7 +113,7 @@ public class PersonTestFactory {
         FinanceData financeData = FinanceData.Builder
                 .create()
                 .withSourcesOfIncome(source1, source2, source3)
-                .build();
+                .buildWithoutExpenses();
 
         return NaturalPerson.Builder
                 .create()
@@ -149,7 +149,7 @@ public class PersonTestFactory {
         FinanceData financeData = FinanceData.Builder
                 .create()
                 .withSourcesOfIncome(source1, source2, source3)
-                .build();
+                .buildWithoutExpenses();
 
         return NaturalPerson.Builder
                 .create()
@@ -185,7 +185,7 @@ public class PersonTestFactory {
         FinanceData financeData = FinanceData.Builder
                 .create()
                 .withSourcesOfIncome(source1, source2, source3)
-                .build();
+                .buildWithoutExpenses();
 
         return NaturalPerson.Builder
                 .create()

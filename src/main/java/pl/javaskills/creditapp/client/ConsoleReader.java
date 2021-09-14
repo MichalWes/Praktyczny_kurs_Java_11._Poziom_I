@@ -220,7 +220,7 @@ public class ConsoleReader implements CreditApplicationReader {
         FinanceData financeData = FinanceData.Builder
                 .create()
                 .withSourcesOfIncome(tempSourceOfIncome)
-                .build();
+                .buildWithoutExpenses();
         return financeData;
     }
 

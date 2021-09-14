@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
 
         PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
-        CreditApplicationService creditApplicationService = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new PersonValidator(new PersonalDataValidator(), new ContactDataValidator(), new FinanceDataValidator()), new PurposeOfLoanValidator(), new GuarantorValidator()));
+        CreditApplicationService creditApplicationService = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new PersonValidator(new PersonalDataValidator(), new ContactDataValidator(), new FinanceDataValidator()), new PurposeOfLoanValidator(), new GuarantorValidator()), new CompoundPostValidator(new PurposeOfLoanPostValidator(), new ExpensesPostValidator()));
         CreditApplicationManager manager = new CreditApplicationManager(creditApplicationService);
         manager.add(new DummyCreditApplicationReader().read());
         manager.add(new DummyCreditApplicationReader().read());
