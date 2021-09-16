@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.javaskills.creditapp.core.model.CreditApplication;
 import pl.javaskills.creditapp.core.model.MaritalStatus;
-import pl.javaskills.creditapp.core.model.Person;
 
 
 public class MaritalStatusCalculator implements ScoringCalculator {

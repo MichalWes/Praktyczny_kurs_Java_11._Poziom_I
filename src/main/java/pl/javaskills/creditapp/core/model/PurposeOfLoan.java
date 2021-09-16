@@ -1,6 +1,9 @@
 package pl.javaskills.creditapp.core.model;
 
+import pl.javaskills.creditapp.core.annotation.NotNull;
+
 public class PurposeOfLoan {
+    @NotNull
     private final Type type;
     private final double amount;
     private  final byte period;

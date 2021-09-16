@@ -3,7 +3,6 @@ package pl.javaskills.creditapp.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
-import pl.javaskills.creditapp.core.exception.RequirementNotMetCause;
 import pl.javaskills.creditapp.core.exception.RequirementNotMetException;
 import pl.javaskills.creditapp.core.exception.ValidationException;
 import pl.javaskills.creditapp.core.model.CreditApplication;
@@ -11,7 +10,6 @@ import pl.javaskills.creditapp.core.model.Person;
 import pl.javaskills.creditapp.core.validation.CompoundPostValidator;
 import pl.javaskills.creditapp.core.validation.CreditApplicationValidator;
 
-import static pl.javaskills.creditapp.core.Constants.*;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
 public class CreditApplicationService {

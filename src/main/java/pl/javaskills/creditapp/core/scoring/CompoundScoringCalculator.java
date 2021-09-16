@@ -3,8 +3,6 @@ package pl.javaskills.creditapp.core.scoring;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pl.javaskills.creditapp.core.model.CreditApplication;
-import pl.javaskills.creditapp.core.model.NaturalPerson;
-import pl.javaskills.creditapp.core.model.Person;
 
 public class CompoundScoringCalculator implements ScoringCalculator {
 

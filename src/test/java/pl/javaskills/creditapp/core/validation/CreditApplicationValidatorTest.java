@@ -1,17 +1,32 @@
-package pl.javaskills.creditapp.client;
+package pl.javaskills.creditapp.core.validation;
 
+import org.junit.jupiter.api.Test;
+import pl.javaskills.creditapp.core.PersonScoringCalculatorFactory;
+import pl.javaskills.creditapp.core.SelfEmployedScoringCalculator;
+import pl.javaskills.creditapp.core.exception.ValidationException;
 import pl.javaskills.creditapp.core.model.*;
+import pl.javaskills.creditapp.core.scoring.EducationCalculator;
+import pl.javaskills.creditapp.core.scoring.GuarantorsCalculator;
+import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
+import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
+import pl.javaskills.creditapp.core.validation.reflection.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class DummyCreditApplicationReader implements CreditApplicationReader {
+import static org.junit.jupiter.api.Assertions.*;
 
-    @Override
-    public CreditApplication read() {
+class CreditApplicationValidatorTest {
+    private Set<FieldAnnotationProcessor> fieldProcessors = Set.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
+    private Set<ClassAnnotationProcessor> classProcessors = Set.of(new ExactlyOneNotNullAnnotationProcessor());
+    private ObjectValidator objectValidator = new ObjectValidator(fieldProcessors, classProcessors);
+    private CreditApplicationValidator cut = new CreditApplicationValidator(objectValidator);
 
+    @Test
+    public void test() throws ValidationException {
+        //given
         PersonalData personalData = PersonalData.Builder
                 .create()
                 .withName("Michal")
@@ -116,6 +131,13 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
 
-        return new CreditApplication(person, purposeOfLoan, guarantors);
+        CreditApplication creditApplication= new CreditApplication(person, purposeOfLoan, guarantors);
+
+        //when
+        cut.validate(creditApplication);
+
+
+
     }
+
 }

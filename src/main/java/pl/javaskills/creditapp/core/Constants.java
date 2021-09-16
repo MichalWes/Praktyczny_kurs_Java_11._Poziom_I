@@ -11,6 +11,7 @@ public interface Constants {
     String LAST_NAME_REGEX2 = "(?=([=A-ZĄ-Ź][a-zą-ź]+)([\\s-][A-Z][a-zą-ź]+)?).{6,20}";
     String EMAIL_REGEX = ".+@.+\\..+";
     String PHONE_NUMBER_REGEX = "(\\+\\d{2})?\\d{9}";
+    String PESEL_REGEX = "\\d{11}";
 }
 
 

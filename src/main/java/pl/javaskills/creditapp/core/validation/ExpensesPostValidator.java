@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 import pl.javaskills.creditapp.core.exception.RequirementNotMetCause;
 import pl.javaskills.creditapp.core.exception.RequirementNotMetException;
 import pl.javaskills.creditapp.core.model.CreditApplication;
-import pl.javaskills.creditapp.core.scoring.GuarantorsCalculator;
-import pl.javaskills.creditapp.core.scoring.ScoringUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

@@ -1,8 +1,14 @@
 package pl.javaskills.creditapp.core.model;
 
+import pl.javaskills.creditapp.core.Constants;
+import pl.javaskills.creditapp.core.annotation.NotNull;
+import pl.javaskills.creditapp.core.annotation.Regex;
+
 import java.util.List;
 
 public class NaturalPerson extends Person {
+    @NotNull
+    @Regex(Constants.PESEL_REGEX)
     private final String pesel;
 
     private NaturalPerson(String pesel, PersonalData personalData, FinanceData financeData, ContactData contactData, List<FamilyMember> familyMembers) {

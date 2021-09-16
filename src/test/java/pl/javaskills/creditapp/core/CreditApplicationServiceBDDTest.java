@@ -8,6 +8,7 @@ import pl.javaskills.creditapp.core.scoring.GuarantorsCalculator;
 import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
 import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
 import pl.javaskills.creditapp.core.validation.*;
+import pl.javaskills.creditapp.core.validation.reflection.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,9 +20,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
 class CreditApplicationServiceBDDTest {
-
-    PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
-    private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new PersonValidator(new PersonalDataValidator(), new ContactDataValidator(), new FinanceDataValidator()), new PurposeOfLoanValidator(), new GuarantorValidator()), new CompoundPostValidator(new ExpensesPostValidator(), new PurposeOfLoanPostValidator()));
+    private Set<FieldAnnotationProcessor> fieldProcessors = Set.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
+    private Set<ClassAnnotationProcessor> classProcessors = Set.of(new ExactlyOneNotNullAnnotationProcessor());
+    private PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
+    private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new ObjectValidator(fieldProcessors, classProcessors)), new CompoundPostValidator(new ExpensesPostValidator(), new PurposeOfLoanPostValidator()));
 
     @Test
     @DisplayName("Should return NEGATIVE_REQUIREMENTS_NOT_MET when scoring is >= 400 and requested loan amount lower than 100000")
@@ -93,7 +95,7 @@ class CreditApplicationServiceBDDTest {
                 .withFinanceData(financeData)
                 .withContactData(contactData)
                 .withFamilyMembers(familyMembers)
-                .withPesel("828382838238")
+                .withPesel("82838283823")
                 .build();
 
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder
@@ -184,8 +186,8 @@ class CreditApplicationServiceBDDTest {
                 .withFinanceData(financeData)
                 .withContactData(contactData)
                 .withFamilyMembers(familyMembers)
-                .withNip("43543545")
-                .withRegon("43434343")
+                .withNip("12345678910")
+                .withRegon(null)
                 .withYearsSinceFounded(1)
                 .build();
 
@@ -277,7 +279,7 @@ class CreditApplicationServiceBDDTest {
                 .withFinanceData(financeData)
                 .withContactData(contactData)
                 .withFamilyMembers(familyMembers)
-                .withNip(null)
+                .withNip("12345678910")
                 .withRegon(null)
                 .withYearsSinceFounded(3)
                 .build();
@@ -369,7 +371,7 @@ class CreditApplicationServiceBDDTest {
                 .withFinanceData(financeData)
                 .withContactData(contactData)
                 .withFamilyMembers(familyMembers)
-                .withNip(null)
+                .withNip("12345678910")
                 .withRegon(null)
                 .withYearsSinceFounded(3)
                 .build();

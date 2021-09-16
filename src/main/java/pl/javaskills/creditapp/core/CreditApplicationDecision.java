@@ -2,9 +2,11 @@ package pl.javaskills.creditapp.core;
 
 import pl.javaskills.creditapp.core.exception.RequirementNotMetCause;
 import pl.javaskills.creditapp.core.model.PersonalData;
-import static pl.javaskills.creditapp.core.Constants.*;
+
 import java.math.BigDecimal;
 import java.util.Optional;
+
+import static pl.javaskills.creditapp.core.Constants.MIN_LOAN_AMOUNT_MORTGAGE;
 
 public class CreditApplicationDecision {
     private final DecisionType decisionType;
