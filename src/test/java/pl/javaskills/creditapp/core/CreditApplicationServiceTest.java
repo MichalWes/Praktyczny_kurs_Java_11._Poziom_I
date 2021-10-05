@@ -10,12 +10,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import pl.javaskills.creditapp.core.exception.RequirementNotMetException;
 import pl.javaskills.creditapp.core.exception.ValidationException;
-import pl.javaskills.creditapp.core.model.*;
+import pl.javaskills.creditapp.core.model.CreditApplication;
+import pl.javaskills.creditapp.core.model.CreditApplicationServiceTestFactory;
+import pl.javaskills.creditapp.core.model.Person;
 import pl.javaskills.creditapp.core.scoring.CompoundScoringCalculator;
 import pl.javaskills.creditapp.core.validation.CompoundPostValidator;
 import pl.javaskills.creditapp.core.validation.CreditApplicationValidator;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 

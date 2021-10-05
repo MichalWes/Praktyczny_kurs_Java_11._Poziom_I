@@ -3,9 +3,13 @@ package pl.javaskills.creditapp.client;
 import pl.javaskills.creditapp.core.Constants;
 import pl.javaskills.creditapp.core.model.*;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+
+import static pl.javaskills.creditapp.core.Constants.CLIENT_TIME_ZONE_ID;
+import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
 
 public class ConsoleReader implements CreditApplicationReader {
 
@@ -98,13 +102,13 @@ public class ConsoleReader implements CreditApplicationReader {
         Guarantor guarantor = Guarantor.Builder
                 .create()
                 .withPesel("95222535353")
-                .withAge(25)
+                .withBirthDate(LocalDate.of(1988, 12, 1))
                 .build();
 
         Set<Guarantor> guarantors = new HashSet<>();
         guarantors.add(guarantor);
 
-        return new CreditApplication(person, purposeOfLoan, guarantors);
+        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan, guarantors);
     }
 
     private String getName(Scanner in) {

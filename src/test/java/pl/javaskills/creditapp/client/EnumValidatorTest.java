@@ -1,6 +1,5 @@
 package pl.javaskills.creditapp.client;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import pl.javaskills.creditapp.core.model.Education;
@@ -8,7 +7,7 @@ import pl.javaskills.creditapp.core.model.IncomeType;
 import pl.javaskills.creditapp.core.model.MaritalStatus;
 import pl.javaskills.creditapp.core.model.Type;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class EnumValidatorTest {
 

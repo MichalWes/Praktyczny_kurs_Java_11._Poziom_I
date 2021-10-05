@@ -1,65 +1,69 @@
 package pl.javaskills.creditapp.core.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import static pl.javaskills.creditapp.core.Constants.CLIENT_TIME_ZONE_ID;
+import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
+
 public class CreditApplicationServiceTestFactory {
 
     public static CreditApplication create(NaturalPerson person, PurposeOfLoan purposeOfLoan, Set<Guarantor> guarantors) {
-        return new CreditApplication(person, purposeOfLoan, guarantors);
+        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan, guarantors);
     }
 
-   public static CreditApplication create(NaturalPerson person, PurposeOfLoan purposeOfLoan) {
-       return new CreditApplication(person, purposeOfLoan);
-   }
+    public static CreditApplication create(NaturalPerson person, PurposeOfLoan purposeOfLoan) {
+        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan);
+    }
 
     public static CreditApplication create(SelfEmployed person, PurposeOfLoan purposeOfLoan) {
-        return new CreditApplication(person, purposeOfLoan);
+        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan);
     }
 
-    public static CreditApplication create(){
+    public static CreditApplication create() {
 
         List<FamilyMember> familyMembers = new ArrayList<>();
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1993, 12, 1))
                 .build());
 
-       NaturalPerson person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, familyMembers, Education.MIDDLE, MaritalStatus.SEPARATED);
-       return new CreditApplication(person, null);
+        NaturalPerson person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, familyMembers, Education.MIDDLE, MaritalStatus.SEPARATED);
+        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, null);
 
     }
 
-    public static CreditApplication create(double amount){
+    public static CreditApplication create(double amount) {
 
         List<FamilyMember> familyMembers = new ArrayList<>();
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1993, 12, 1))
                 .build());
 
-       NaturalPerson person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, familyMembers, Education.MIDDLE, MaritalStatus.SEPARATED);
+        NaturalPerson person = PersonTestFactory.create(3000.0, 1000.0, 1000.0, familyMembers, Education.MIDDLE, MaritalStatus.SEPARATED);
         PurposeOfLoan purposeOfLoan = PurposeOfLoan.Builder.create()
                 .withAmount(amount)
                 .build();
-        return new CreditApplication(person, purposeOfLoan);
+        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan);
     }
 
 

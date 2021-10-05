@@ -1,33 +1,45 @@
 package pl.javaskills.creditapp;
 
 import pl.javaskills.creditapp.client.DummyCreditApplicationReader;
-import pl.javaskills.creditapp.core.*;
-import pl.javaskills.creditapp.core.scoring.EducationCalculator;
-import pl.javaskills.creditapp.core.scoring.GuarantorsCalculator;
-import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
-import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
-import pl.javaskills.creditapp.core.validation.*;
+import pl.javaskills.creditapp.core.CreditApplicationManager;
+import pl.javaskills.creditapp.core.validation.CompoundPostValidator;
+import pl.javaskills.creditapp.core.validation.ExpensesPostValidator;
+import pl.javaskills.creditapp.core.validation.ObjectValidator;
+import pl.javaskills.creditapp.core.validation.PurposeOfLoanPostValidator;
 import pl.javaskills.creditapp.core.validation.reflection.*;
+import pl.javaskills.creditapp.di.ClassInitializer;
 
-import java.util.Set;
+import java.util.List;
+import java.util.TimeZone;
+
+import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_ZONE_ID;
 
 public class Main {
 
-    public static void main(String[] args) {
+    static {
+        TimeZone.setDefault(TimeZone.getTimeZone(DEFAULT_SYSTEM_ZONE_ID));
+    }
 
-        PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
-        Set<FieldAnnotationProcessor> fieldProcessors = Set.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
-        Set<ClassAnnotationProcessor> classProcessors = Set.of(new ExactlyOneNotNullAnnotationProcessor());
-        CreditApplicationService creditApplicationService = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new ObjectValidator(fieldProcessors, classProcessors)), new CompoundPostValidator(new PurposeOfLoanPostValidator(), new ExpensesPostValidator()));
-        CreditApplicationManager manager = new CreditApplicationManager(creditApplicationService);
+    public static void main(String[] args) throws Exception {
+
+        List<FieldAnnotationProcessor> fieldProcessors = List.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
+        List<ClassAnnotationProcessor> classProcessors = List.of(new ExactlyOneNotNullAnnotationProcessor());
+        CompoundPostValidator compoundPostValidator = new CompoundPostValidator(new PurposeOfLoanPostValidator(), new ExpensesPostValidator());
+        ObjectValidator objectValidator = new ObjectValidator(fieldProcessors, classProcessors);
+
+        ClassInitializer classInitializer = new ClassInitializer();
+        classInitializer.registerInstance(compoundPostValidator);
+        classInitializer.registerInstance(objectValidator);
+        CreditApplicationManager manager = (CreditApplicationManager) classInitializer.createInstance(CreditApplicationManager.class);
+
         manager.add(new DummyCreditApplicationReader().read());
-        manager.add(new DummyCreditApplicationReader().read());
-        manager.add(new DummyCreditApplicationReader().read());
-        manager.add(new DummyCreditApplicationReader().read());
-        manager.add(new DummyCreditApplicationReader().read());
-        manager.add(new DummyCreditApplicationReader().read());
-        manager.add(new DummyCreditApplicationReader().read());
-        manager.add(new DummyCreditApplicationReader().read());
+//        manager.add(new DummyCreditApplicationReader().read());
+//        manager.add(new DummyCreditApplicationReader().read());
+//        manager.add(new DummyCreditApplicationReader().read());
+//        manager.add(new DummyCreditApplicationReader().read());
+//        manager.add(new DummyCreditApplicationReader().read());
+//        manager.add(new DummyCreditApplicationReader().read());
+//        manager.add(new DummyCreditApplicationReader().read());
         manager.startProcessing();
     }
 }

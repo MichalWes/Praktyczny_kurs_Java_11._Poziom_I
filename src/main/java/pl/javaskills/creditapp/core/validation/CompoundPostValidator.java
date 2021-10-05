@@ -2,13 +2,18 @@ package pl.javaskills.creditapp.core.validation;
 
 import pl.javaskills.creditapp.core.exception.RequirementNotMetException;
 import pl.javaskills.creditapp.core.model.CreditApplication;
+import pl.javaskills.creditapp.di.Inject;
 
 public class CompoundPostValidator implements PostValidator {
 
-    private final PostValidator[] postValidators;
+    @Inject
+    private PostValidator[] postValidators;
 
     public CompoundPostValidator(PostValidator... postValidators) {
         this.postValidators = postValidators;
+    }
+
+    public CompoundPostValidator(){
     }
 
     @Override

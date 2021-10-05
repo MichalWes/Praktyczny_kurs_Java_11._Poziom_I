@@ -10,18 +10,18 @@ import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
 import pl.javaskills.creditapp.core.validation.*;
 import pl.javaskills.creditapp.core.validation.reflection.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.eq;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
 class CreditApplicationServiceBDDTest {
-    private Set<FieldAnnotationProcessor> fieldProcessors = Set.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
-    private Set<ClassAnnotationProcessor> classProcessors = Set.of(new ExactlyOneNotNullAnnotationProcessor());
+    private List<FieldAnnotationProcessor> fieldProcessors = List.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
+    private List<ClassAnnotationProcessor> classProcessors = List.of(new ExactlyOneNotNullAnnotationProcessor());
     private PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
     private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new ObjectValidator(fieldProcessors, classProcessors)), new CompoundPostValidator(new ExpensesPostValidator(), new PurposeOfLoanPostValidator()));
 
@@ -80,13 +80,13 @@ class CreditApplicationServiceBDDTest {
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1995, 12, 1))
                 .build());
 
         NaturalPerson person = NaturalPerson.Builder
@@ -171,13 +171,13 @@ class CreditApplicationServiceBDDTest {
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1986, 12, 1))
                 .build());
 
         SelfEmployed person = SelfEmployed.Builder
@@ -264,13 +264,13 @@ class CreditApplicationServiceBDDTest {
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1993, 12, 1))
                 .build());
 
         SelfEmployed person = SelfEmployed.Builder
@@ -362,7 +362,7 @@ class CreditApplicationServiceBDDTest {
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         SelfEmployed person = SelfEmployed.Builder

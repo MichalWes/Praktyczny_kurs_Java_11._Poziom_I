@@ -1,5 +1,6 @@
 package pl.javaskills.creditapp.core.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,7 +76,7 @@ public class PersonTestFactory {
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         return NaturalPerson.Builder

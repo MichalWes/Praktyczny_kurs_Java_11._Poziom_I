@@ -2,20 +2,23 @@ package pl.javaskills.creditapp.core.model;
 
 import pl.javaskills.creditapp.core.annotation.NotNull;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public class FamilyMember implements Comparable<FamilyMember> {
     @NotNull
     private final String name;
     @NotNull
-    private final Integer age;
+    private final LocalDate birthDate;
 
-    private FamilyMember(String name, Integer age) {
+    private FamilyMember(String name, LocalDate birthDate) {
         this.name = name;
-        this.age = age;
+        this.birthDate = birthDate;
     }
 
     public static class Builder {
         private String name;
-        private Integer age;
+        private LocalDate birthDate;
 
         private Builder() {
         }
@@ -29,13 +32,13 @@ public class FamilyMember implements Comparable<FamilyMember> {
             return this;
         }
 
-        public Builder withAge(int age) {
-            this.age = age;
+        public Builder withBirthDate(LocalDate birthDate) {
+            this.birthDate = birthDate;
             return this;
         }
 
         public FamilyMember build() {
-            return new FamilyMember(name, age);
+            return new FamilyMember(name, birthDate);
         }
 
     }
@@ -45,16 +48,16 @@ public class FamilyMember implements Comparable<FamilyMember> {
     }
 
     public Integer getAge() {
-        return age;
+        return Period.between(birthDate, LocalDate.now()).getYears();
     }
 
     @Override
     public String toString() {
-        return name + ", " + age;
+        return name + ", " + getAge();
     }
 
     @Override
     public int compareTo(FamilyMember o) {
-        return o.age.compareTo(age);
+        return o.birthDate.compareTo(birthDate);
     }
 }

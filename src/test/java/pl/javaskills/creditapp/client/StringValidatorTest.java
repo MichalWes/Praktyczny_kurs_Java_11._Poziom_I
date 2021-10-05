@@ -3,7 +3,7 @@ package pl.javaskills.creditapp.client;
 import org.junit.jupiter.api.Test;
 import pl.javaskills.creditapp.core.Constants;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class StringValidatorTest {
 

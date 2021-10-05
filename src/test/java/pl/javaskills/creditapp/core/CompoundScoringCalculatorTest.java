@@ -10,13 +10,17 @@ import pl.javaskills.creditapp.core.model.CreditApplication;
 import pl.javaskills.creditapp.core.model.Guarantor;
 import pl.javaskills.creditapp.core.model.Person;
 import pl.javaskills.creditapp.core.model.PersonTestFactory;
-import pl.javaskills.creditapp.core.scoring.*;
+import pl.javaskills.creditapp.core.scoring.CompoundScoringCalculator;
+import pl.javaskills.creditapp.core.scoring.ScoringCalculator;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
+import static pl.javaskills.creditapp.core.Constants.CLIENT_TIME_ZONE_ID;
+import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
 
 @ExtendWith(MockitoExtension.class)
 class CompoundScoringCalculatorTest {
@@ -34,19 +38,19 @@ class CompoundScoringCalculatorTest {
         Guarantor guarantor1 = Guarantor.Builder
                 .create()
                 .withPesel("95222535353")
-                .withAge(25)
+                .withBirthDate(LocalDate.of(1988, 12, 1))
                 .build();
 
         Guarantor guarantor2 = Guarantor.Builder
                 .create()
                 .withPesel("95222535332")
-                .withAge(45)
+                .withBirthDate(LocalDate.of(1988, 12, 1))
                 .build();
 
         Set<Guarantor> guarantors = new TreeSet<>();
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
-        CreditApplication creditApplication = new CreditApplication(person, null, guarantors);
+        CreditApplication creditApplication = new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE,person, null, guarantors);
         BDDMockito.given(incomeCalculatorMock.calculate(eq(creditApplication))).willReturn(50);
         BDDMockito.given(maritalStatusCalculatorMock.calculate(eq(creditApplication))).willReturn(100);
         BDDMockito.given(educationCalculatorMock.calculate(eq(creditApplication))).willReturn(200);

@@ -1,13 +1,20 @@
 package pl.javaskills.creditapp.client;
 
 import pl.javaskills.creditapp.core.model.*;
+import pl.javaskills.creditapp.util.AgeUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static pl.javaskills.creditapp.core.Constants.CLIENT_TIME_ZONE_ID;
+import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
+
 public class DummyCreditApplicationReader implements CreditApplicationReader {
+
+
 
     @Override
     public CreditApplication read() {
@@ -70,25 +77,25 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(1988, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1989, 03, 26))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Alicja")
-                .withAge(34)
+                .withBirthDate(LocalDate.of(1958, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Monstrancja")
-                .withAge(56)
+                .withBirthDate(LocalDate.of(1954, 12, 1))
                 .build());
 
         NaturalPerson person = NaturalPerson.Builder
@@ -103,19 +110,20 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
         Guarantor guarantor1 = Guarantor.Builder
                 .create()
                 .withPesel("95222535353")
-                .withAge(25)
+                .withBirthDate(LocalDate.of(1989, 03, 1))
                 .build();
 
         Guarantor guarantor2 = Guarantor.Builder
                 .create()
                 .withPesel("95222535332")
-                .withAge(45)
+                .withBirthDate(AgeUtils.generateBirthDate(32))
                 .build();
 
         Set<Guarantor> guarantors = new TreeSet<>();
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
 
-        return new CreditApplication(person, purposeOfLoan, guarantors);
+
+        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan, guarantors);
     }
 }

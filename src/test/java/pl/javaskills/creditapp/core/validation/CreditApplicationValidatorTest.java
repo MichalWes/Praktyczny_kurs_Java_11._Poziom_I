@@ -1,26 +1,22 @@
 package pl.javaskills.creditapp.core.validation;
 
 import org.junit.jupiter.api.Test;
-import pl.javaskills.creditapp.core.PersonScoringCalculatorFactory;
-import pl.javaskills.creditapp.core.SelfEmployedScoringCalculator;
 import pl.javaskills.creditapp.core.exception.ValidationException;
 import pl.javaskills.creditapp.core.model.*;
-import pl.javaskills.creditapp.core.scoring.EducationCalculator;
-import pl.javaskills.creditapp.core.scoring.GuarantorsCalculator;
-import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
-import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
 import pl.javaskills.creditapp.core.validation.reflection.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static pl.javaskills.creditapp.core.Constants.CLIENT_TIME_ZONE_ID;
+import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
 
 class CreditApplicationValidatorTest {
-    private Set<FieldAnnotationProcessor> fieldProcessors = Set.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
-    private Set<ClassAnnotationProcessor> classProcessors = Set.of(new ExactlyOneNotNullAnnotationProcessor());
+    private List<FieldAnnotationProcessor> fieldProcessors = List.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
+    private List<ClassAnnotationProcessor> classProcessors = List.of(new ExactlyOneNotNullAnnotationProcessor());
     private ObjectValidator objectValidator = new ObjectValidator(fieldProcessors, classProcessors);
     private CreditApplicationValidator cut = new CreditApplicationValidator(objectValidator);
 
@@ -66,7 +62,7 @@ class CreditApplicationValidatorTest {
                 .create()
                 .withType(Type.MORTGAGE)
                 .withAmount(300000.0)
-                .withPeriod((byte)30)
+                .withPeriod((byte) 30)
                 .build();
 
         SourceOfIncome sourceOfIncome = SourceOfIncome.Builder
@@ -85,25 +81,25 @@ class CreditApplicationValidatorTest {
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1993, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Alicja")
-                .withAge(34)
+                .withBirthDate(LocalDate.of(1986, 12, 1))
                 .build());
 
         familyMembers.add(FamilyMember.Builder
                 .create()
                 .withName("Monstrancja")
-                .withAge(56)
+                .withBirthDate(LocalDate.of(1970, 12, 1))
                 .build());
 
         NaturalPerson person = NaturalPerson.Builder
@@ -118,24 +114,23 @@ class CreditApplicationValidatorTest {
         Guarantor guarantor1 = Guarantor.Builder
                 .create()
                 .withPesel("95222535353")
-                .withAge(25)
+                .withBirthDate(LocalDate.of(1995, 12, 1))
                 .build();
 
         Guarantor guarantor2 = Guarantor.Builder
                 .create()
                 .withPesel("95222535332")
-                .withAge(45)
+                .withBirthDate(LocalDate.of(1975, 12, 1))
                 .build();
 
         Set<Guarantor> guarantors = new TreeSet<>();
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
 
-        CreditApplication creditApplication= new CreditApplication(person, purposeOfLoan, guarantors);
+        CreditApplication creditApplication = new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan, guarantors);
 
         //when
         cut.validate(creditApplication);
-
 
 
     }

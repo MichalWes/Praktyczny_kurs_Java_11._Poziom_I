@@ -3,6 +3,7 @@ package pl.javaskills.creditapp.core.model;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,25 +21,25 @@ class PersonTest {
         FamilyMember member1 = FamilyMember.Builder
                 .create()
                 .withName("Andrzej")
-                .withAge(20)
+                .withBirthDate(LocalDate.of(2000, 12, 1))
                 .build();
 
         FamilyMember member2 = FamilyMember.Builder
                 .create()
                 .withName("Zdzisław")
-                .withAge(27)
+                .withBirthDate(LocalDate.of(1992, 12, 1))
                 .build();
 
         FamilyMember member3 = FamilyMember.Builder
                 .create()
                 .withName("Alicja")
-                .withAge(34)
+                .withBirthDate(LocalDate.of(1986, 12, 1))
                 .build();
 
         FamilyMember member4 = FamilyMember.Builder
                 .create()
                 .withName("Monstrancja")
-                .withAge(56)
+                .withBirthDate(LocalDate.of(1965, 12, 1))
                 .build();
 
         List<FamilyMember> familyMembers = new ArrayList<>(Arrays.asList(member1, member2, member3, member4));

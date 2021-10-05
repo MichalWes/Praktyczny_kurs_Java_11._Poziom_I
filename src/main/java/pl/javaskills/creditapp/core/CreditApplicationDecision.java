@@ -2,33 +2,42 @@ package pl.javaskills.creditapp.core;
 
 import pl.javaskills.creditapp.core.exception.RequirementNotMetCause;
 import pl.javaskills.creditapp.core.model.PersonalData;
+import pl.javaskills.creditapp.di.Inject;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
 import static pl.javaskills.creditapp.core.Constants.MIN_LOAN_AMOUNT_MORTGAGE;
 
 public class CreditApplicationDecision {
     private final DecisionType decisionType;
     private final Optional<RequirementNotMetCause> requirementNotMetCause;
-    private final PersonalData personalData;
+    @Inject
+    private PersonalData personalData;
     private final Double creditRating;
     private final int scoring;
+    Locale locale;
+    ResourceBundle resourceBundle;
 
-    public CreditApplicationDecision(DecisionType decisionType, PersonalData personalData, Double creditRating, int scoring) {
+    public CreditApplicationDecision(DecisionType decisionType, PersonalData personalData, Double creditRating, int scoring, Locale locale) {
         this.decisionType = decisionType;
         this.personalData = personalData;
         this.creditRating = creditRating;
         this.scoring = scoring;
         this.requirementNotMetCause = Optional.empty();
+        this.locale = locale;
+        this.resourceBundle = ResourceBundle.getBundle("translations", locale);
     }
 
-    public CreditApplicationDecision(DecisionType decisionType, PersonalData personalData, Double creditRating, int scoring, RequirementNotMetCause cause) {
+    public CreditApplicationDecision(DecisionType decisionType, PersonalData personalData, Double creditRating, int scoring, RequirementNotMetCause cause, Locale locale) {
         this.decisionType = decisionType;
         this.personalData = personalData;
         this.creditRating = creditRating;
         this.scoring = scoring;
         this.requirementNotMetCause = Optional.of(cause);
+        this.locale = locale;
     }
 
     public DecisionType getDecisionType() {
@@ -46,19 +55,19 @@ public class CreditApplicationDecision {
     public String getDecisionString() {
         switch (decisionType) {
             case NEGATIVE_SCORING:
-                return "Sorry " + personalData.getName() + " " + personalData.getLastName() + " decision is negative.";
+                return resourceBundle.getString("sorry") + " " + personalData.getName() + " " + personalData.getLastName() + " " + resourceBundle.getString("decisionNegative");
             case CONTACT_REQUIRED:
-                return "Sorry " + personalData.getName() + " " + personalData.getLastName() + ", bank requires additional documents. Our Consultant will contact you.";
+                return resourceBundle.getString("sorry") + " " + personalData.getName() + " " + personalData.getLastName() + " " + resourceBundle.getString("additionalDocuments");
             case POSITIVE:
-                return "Congratulations, " + personalData.getName() + " " + personalData.getLastName() + ", decision is positive.";
+                return resourceBundle.getString("congratulations") + " " + personalData.getName() + " " + personalData.getLastName() + " " + resourceBundle.getString("decisionPositive");
             case NEGATIVE_CREDIT_RATING:
-                return "Sorry, " + personalData.getName() + " " + personalData.getLastName() + ", decision is negative. Bank can borrow only " + new BigDecimal(creditRating).setScale(2);
+                return resourceBundle.getString("sorry") + " " + personalData.getName() + " " + personalData.getLastName() + resourceBundle.getString("decisionNegativeLimit") + " " + new BigDecimal(creditRating).setScale(2);
             case NEGATIVE_REQUIREMENTS_NOT_MET:
-                switch (requirementNotMetCause.get()){
+                switch (requirementNotMetCause.get()) {
                     case TOO_LOW_LOAN_AMOUNT:
-                        return "Sorry, " + personalData.getName() + " " + personalData.getLastName() + ", decision is negative. Minimum loan amount for mortgage is: "+MIN_LOAN_AMOUNT_MORTGAGE;
+                        return resourceBundle.getString("sorry") + " " + personalData.getName() + " " + personalData.getLastName() + resourceBundle.getString("decisionNegativeMortgage")+ " " + MIN_LOAN_AMOUNT_MORTGAGE;
                     case TOO_HIGH_PERSONAL_EXPENSES:
-                        return "Sorry, " + personalData.getName() + " " + personalData.getLastName() + ", decision is negative. Personal expenses are too high";
+                        return resourceBundle.getString("sorry") + " " + personalData.getName() + " " + personalData.getLastName() + resourceBundle.getString("decisionNegativeHighExpenses");
                 }
 
         }

@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.javaskills.creditapp.core.model.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
@@ -45,13 +46,13 @@ public class GuarantorCalculatorTest {
         Guarantor guarantor1 = Guarantor.Builder
                 .create()
                 .withPesel("95222535353")
-                .withAge(25)
+                .withBirthDate(LocalDate.of(1995, 12, 1))
                 .build();
 
         Guarantor guarantor2 = Guarantor.Builder
                 .create()
                 .withPesel("95222535332")
-                .withAge(45)
+                .withBirthDate(LocalDate.of(1975, 12, 1))
                 .build();
 
         Set<Guarantor> guarantors = new TreeSet<>();
