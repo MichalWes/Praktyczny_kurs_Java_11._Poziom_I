@@ -50,7 +50,7 @@ class CompoundScoringCalculatorTest {
         Set<Guarantor> guarantors = new TreeSet<>();
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
-        CreditApplication creditApplication = new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE,person, null, guarantors);
+        CreditApplication creditApplication = new CreditApplication(DEFAULT_SYSTEM_LOCALE, CLIENT_TIME_ZONE_ID, person, null, guarantors);
         BDDMockito.given(incomeCalculatorMock.calculate(eq(creditApplication))).willReturn(50);
         BDDMockito.given(maritalStatusCalculatorMock.calculate(eq(creditApplication))).willReturn(100);
         BDDMockito.given(educationCalculatorMock.calculate(eq(creditApplication))).willReturn(200);

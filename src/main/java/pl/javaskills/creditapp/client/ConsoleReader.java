@@ -108,7 +108,7 @@ public class ConsoleReader implements CreditApplicationReader {
         Set<Guarantor> guarantors = new HashSet<>();
         guarantors.add(guarantor);
 
-        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan, guarantors);
+        return new CreditApplication(DEFAULT_SYSTEM_LOCALE,CLIENT_TIME_ZONE_ID,  person, purposeOfLoan, guarantors);
     }
 
     private String getName(Scanner in) {

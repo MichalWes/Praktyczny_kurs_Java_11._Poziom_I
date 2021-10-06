@@ -38,7 +38,7 @@ class IncomeCalculatorTest {
         Set<Guarantor> guarantors = new TreeSet<>();
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
-        CreditApplication creditApplication = new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, null, guarantors);
+        CreditApplication creditApplication = new CreditApplication(DEFAULT_SYSTEM_LOCALE, CLIENT_TIME_ZONE_ID, person, null, guarantors);
         //when
         int scoring = cut.calculate(creditApplication);
         //then

@@ -127,7 +127,7 @@ class CreditApplicationValidatorTest {
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
 
-        CreditApplication creditApplication = new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan, guarantors);
+        CreditApplication creditApplication = new CreditApplication(DEFAULT_SYSTEM_LOCALE, CLIENT_TIME_ZONE_ID, person, purposeOfLoan, guarantors);
 
         //when
         cut.validate(creditApplication);

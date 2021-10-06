@@ -17,7 +17,7 @@ public interface Constants {
     String PESEL_REGEX = "\\d{11}";
     ZoneId DEFAULT_SYSTEM_ZONE_ID = ZoneId.of("America/New_York");
     ZoneId CLIENT_TIME_ZONE_ID = ZoneId.of("Europe/Warsaw");
-    Locale DEFAULT_SYSTEM_LOCALE = new Locale("pl", "PL");
+    Locale DEFAULT_SYSTEM_LOCALE = Locale.US;
 }
 
 

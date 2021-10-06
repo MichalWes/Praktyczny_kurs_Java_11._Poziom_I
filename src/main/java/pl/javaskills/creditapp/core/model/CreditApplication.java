@@ -32,7 +32,7 @@ public class CreditApplication {
     private final UUID id;
 
 
-    public CreditApplication(ZoneId clientTimeZoneId, Locale clientLocale, Person person, PurposeOfLoan purposeOfLoan) {
+    public CreditApplication(Locale clientLocale, ZoneId clientTimeZoneId, Person person, PurposeOfLoan purposeOfLoan) {
         this.person = person;
         this.purposeOfLoan = purposeOfLoan;
         this.guarantors = new TreeSet<>();
@@ -42,7 +42,7 @@ public class CreditApplication {
         this.clientLocale = clientLocale;
     }
 
-    public CreditApplication(ZoneId clientTimeZoneId, Locale clientLocale, Person person, PurposeOfLoan purposeOfLoan, Set<Guarantor> guarantors) {
+    public CreditApplication(Locale clientLocale, ZoneId clientTimeZoneId, Person person, PurposeOfLoan purposeOfLoan, Set<Guarantor> guarantors) {
         this.person = person;
         this.purposeOfLoan = purposeOfLoan;
         this.guarantors = new TreeSet<>(guarantors);

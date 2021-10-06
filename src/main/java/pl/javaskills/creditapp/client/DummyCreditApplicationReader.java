@@ -4,16 +4,12 @@ import pl.javaskills.creditapp.core.model.*;
 import pl.javaskills.creditapp.util.AgeUtils;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import static pl.javaskills.creditapp.core.Constants.CLIENT_TIME_ZONE_ID;
 import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
 
 public class DummyCreditApplicationReader implements CreditApplicationReader {
-
 
 
     @Override
@@ -58,7 +54,7 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
                 .create()
                 .withType(Type.MORTGAGE)
                 .withAmount(300000.0)
-                .withPeriod((byte)30)
+                .withPeriod((byte) 30)
                 .build();
 
         SourceOfIncome sourceOfIncome = SourceOfIncome.Builder
@@ -123,7 +119,6 @@ public class DummyCreditApplicationReader implements CreditApplicationReader {
         guarantors.add(guarantor1);
         guarantors.add(guarantor2);
 
-
-        return new CreditApplication(CLIENT_TIME_ZONE_ID, DEFAULT_SYSTEM_LOCALE, person, purposeOfLoan, guarantors);
+        return new CreditApplication(new Locale("pl", "PL"), CLIENT_TIME_ZONE_ID, person, purposeOfLoan, guarantors);
     }
 }

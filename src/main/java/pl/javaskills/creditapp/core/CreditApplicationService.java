@@ -46,9 +46,8 @@ public class CreditApplicationService {
         try {
             //step 1
             creditApplicationValidator.validate(creditApplication);
-
-            Person person = creditApplication.getPerson();
             //step 2
+            Person person = creditApplication.getPerson();
             int score = personScoringCalculatorFactory.getCalculator(person).calculate(creditApplication);
             //step 3
             double creditRating = calculator.getCreditRating(creditApplication);
@@ -56,11 +55,11 @@ public class CreditApplicationService {
             try {
                 compoundPostValidator.validate(creditApplication, score, creditRating);
             } catch (RequirementNotMetException ex) {
-                return (new CreditApplicationDecisionFactory()).createDecision(NEGATIVE_REQUIREMENTS_NOT_MET, creditApplication, creditRating, score, ex.getRequirementNotMentCause());
+                return new CreditApplicationDecision(NEGATIVE_REQUIREMENTS_NOT_MET, creditApplication.getPerson().getPersonalData(), creditRating, score, ex.getRequirementNotMentCause());
             }
             DecisionType decisionType = getDecisionType(creditApplication, score, creditRating);
             log.info("Decision = " + decisionType);
-            return (new CreditApplicationDecisionFactory()).createDecision(decisionType, creditApplication, creditRating, score);
+            return new CreditApplicationDecision(decisionType, creditApplication.getPerson().getPersonalData(), creditRating, score);
         } catch (ValidationException validationException) {
             log.error(validationException.getMessage());
             throw new IllegalStateException();
@@ -70,8 +69,8 @@ public class CreditApplicationService {
         } finally {
             long ms1 = Duration.between(start, Instant.now()).toMillis();
             long ms2 = Duration.between(creditApplication.getCreationDateClientZone(), ZonedDateTime.now(creditApplication.getClientTimeZoneId())).toMillis();
-            log.info("Application processing took " +ms1+" ms");
-            log.info("Application processing zone/time took " +ms2+" ms");
+            log.info("Application processing took " + ms1 + " ms");
+            log.info("Application processing zone/time took " + ms2 + " ms");
             log.info("Application processing is finished");
         }
     }

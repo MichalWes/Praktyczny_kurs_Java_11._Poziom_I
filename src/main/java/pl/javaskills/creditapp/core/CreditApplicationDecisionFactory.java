@@ -1,34 +1,46 @@
 package pl.javaskills.creditapp.core;
 
 
-import ch.qos.logback.classic.Level;
-import pl.javaskills.creditapp.core.exception.RequirementNotMetCause;
 import pl.javaskills.creditapp.core.model.CreditApplication;
+import pl.javaskills.creditapp.core.model.PersonalData;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.Locale;
-import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 
-import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
+import static pl.javaskills.creditapp.core.Constants.MIN_LOAN_AMOUNT_MORTGAGE;
 
 
 public class CreditApplicationDecisionFactory {
 
-    public CreditApplicationDecision createDecision(DecisionType decisionType, CreditApplication creditApplication, double creditRating, int score) {
-        return new CreditApplicationDecision(decisionType, creditApplication.getPerson().getPersonalData(), creditRating, score, creditApplication.getClientLocale());
+
+    public String getDecisionString(CreditApplicationDecision creditApplicationDecision, CreditApplication creditApplication) {
+        Locale locale = creditApplication.getClientLocale();
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("translations", locale);
+        PersonalData personalData = creditApplication.getPerson().getPersonalData();
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(creditApplication.getClientLocale());
+
+        switch (creditApplicationDecision.getDecisionType()) {
+            case NEGATIVE_SCORING:
+                return String.format(resourceBundle.getString("decisionNegative"), personalData.getName(), personalData.getLastName());
+            case CONTACT_REQUIRED:
+                return String.format(resourceBundle.getString("additionalDocuments"), personalData.getName(), personalData.getLastName());
+            case POSITIVE:
+                return String.format(resourceBundle.getString("decisionPositive"), personalData.getName(), personalData.getLastName());
+            case NEGATIVE_CREDIT_RATING:
+                BigDecimal bdRating = new BigDecimal(creditApplicationDecision.getCreditRating()).setScale(2);
+                return String.format(resourceBundle.getString("decisionNegativeLimit"), personalData.getName(), personalData.getLastName(), numberFormat.format(bdRating.doubleValue()));
+            case NEGATIVE_REQUIREMENTS_NOT_MET:
+                switch (creditApplicationDecision.getRequirementNotMetCause().get()) {
+                    case TOO_LOW_LOAN_AMOUNT:
+                        return String.format(resourceBundle.getString("decisionNegativeMortgage"), personalData.getName(), personalData.getLastName(), numberFormat.format(MIN_LOAN_AMOUNT_MORTGAGE));
+                    case TOO_HIGH_PERSONAL_EXPENSES:
+                        return String.format(resourceBundle.getString("decisionNegativeHighExpenses"), personalData.getName(), personalData.getLastName());
+                }
+
+        }
+        return null;
     }
-
-    public CreditApplicationDecision createDecision(DecisionType decisionType, CreditApplication creditApplication, double creditRating, int score, RequirementNotMetCause requirementNotMetCause) {
-        return new CreditApplicationDecision(decisionType, creditApplication.getPerson().getPersonalData(), creditRating, score, requirementNotMetCause, creditApplication.getClientLocale());
-    }
-
-//    public Locale chooseLocale(CreditApplication creditApplication) {
-//
-//            if (creditApplication.getClientLocale().equals(DEFAULT_SYSTEM_LOCALE) || creditApplication.getClientLocale().equals(Locale.US))
-//            {
-//                return creditApplication.getClientLocale();
-//            } else {
-//                return Locale.US;
-//            }
-
 
 }

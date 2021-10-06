@@ -10,14 +10,17 @@ import pl.javaskills.creditapp.core.validation.reflection.*;
 import pl.javaskills.creditapp.di.ClassInitializer;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
+import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_LOCALE;
 import static pl.javaskills.creditapp.core.Constants.DEFAULT_SYSTEM_ZONE_ID;
 
 public class Main {
 
     static {
         TimeZone.setDefault(TimeZone.getTimeZone(DEFAULT_SYSTEM_ZONE_ID));
+        Locale.setDefault(DEFAULT_SYSTEM_LOCALE);
     }
 
     public static void main(String[] args) throws Exception {

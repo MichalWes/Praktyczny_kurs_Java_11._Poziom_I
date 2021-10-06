@@ -6,9 +6,6 @@ import org.slf4j.MDC;
 import pl.javaskills.creditapp.core.model.CreditApplication;
 import pl.javaskills.creditapp.di.Inject;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -17,6 +14,9 @@ public class CreditApplicationManager {
     private static final Logger log = LoggerFactory.getLogger(CreditApplicationManager.class);
     @Inject
     private CreditApplicationService creditApplicationService;
+    @Inject
+    private CreditApplicationDecisionFactory creditApplicationDecisionFactory;
+
     private final Deque<CreditApplication> queue = new ArrayDeque<>();
 
     public CreditApplicationManager(CreditApplicationService creditApplicationService) {
@@ -39,7 +39,7 @@ public class CreditApplicationManager {
             CreditApplication creditApplication = queue.pollLast();
             log.info(String.format("Start processing application with id %s", creditApplication.getId().toString()));
             CreditApplicationDecision decision = creditApplicationService.getDecision(creditApplication);
-            log.info(decision.getDecisionString());
+            log.info(creditApplicationDecisionFactory.getDecisionString(decision, creditApplication));
             log.info("");
         }
 
