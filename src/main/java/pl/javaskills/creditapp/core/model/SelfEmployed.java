@@ -77,4 +77,8 @@ public class SelfEmployed extends Person {
             return new SelfEmployed(nip, regon, yearsSinceFounded, personalData, financeData, contactData, familyMembers);
         }
     }
+
+    public String getNip() {
+        return nip;
+    }
 }

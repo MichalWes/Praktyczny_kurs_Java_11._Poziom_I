@@ -2,12 +2,14 @@ package pl.javaskills.creditapp;
 
 import pl.javaskills.creditapp.client.DummyCreditApplicationReader;
 import pl.javaskills.creditapp.core.CreditApplicationManager;
+import pl.javaskills.creditapp.core.scoring.BikScoringCalculator;
 import pl.javaskills.creditapp.core.validation.CompoundPostValidator;
 import pl.javaskills.creditapp.core.validation.ExpensesPostValidator;
 import pl.javaskills.creditapp.core.validation.ObjectValidator;
 import pl.javaskills.creditapp.core.validation.PurposeOfLoanPostValidator;
 import pl.javaskills.creditapp.core.validation.reflection.*;
 import pl.javaskills.creditapp.di.ClassInitializer;
+import pl.javaskills.creditapp.integration.BikApiAdapter;
 
 import java.util.List;
 import java.util.Locale;
@@ -33,6 +35,7 @@ public class Main {
         ClassInitializer classInitializer = new ClassInitializer();
         classInitializer.registerInstance(compoundPostValidator);
         classInitializer.registerInstance(objectValidator);
+        classInitializer.registerInstance(new BikScoringCalculator(new BikApiAdapter()));
         CreditApplicationManager manager = (CreditApplicationManager) classInitializer.createInstance(CreditApplicationManager.class);
 
         manager.add(new DummyCreditApplicationReader().read());

@@ -57,10 +57,10 @@ class PersonTest {
         //then
         assertNotNull(person.getFamilyMembers());
         assertTrue(person.getFamilyMembers().size() == 4);
-        assertEquals(member4, person.getFamilyMembers().get(0));
-        assertEquals(member3, person.getFamilyMembers().get(1));
-        assertEquals(member2, person.getFamilyMembers().get(2));
-        assertEquals(member1, person.getFamilyMembers().get(3));
+        assertEquals(member4, person.getFamilyMembers().get(3));
+        assertEquals(member3, person.getFamilyMembers().get(2));
+        assertEquals(member2, person.getFamilyMembers().get(1));
+        assertEquals(member1, person.getFamilyMembers().get(0));
 
     }
 

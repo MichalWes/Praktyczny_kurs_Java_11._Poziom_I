@@ -1,12 +1,15 @@
 package pl.javaskills.creditapp.core;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
+import org.mockito.Mockito;
+import pl.javaskills.creditapp.core.bik.BikApi;
+import pl.javaskills.creditapp.core.bik.ScoringRequest;
+import pl.javaskills.creditapp.core.bik.ScoringResponse;
 import pl.javaskills.creditapp.core.model.*;
-import pl.javaskills.creditapp.core.scoring.EducationCalculator;
-import pl.javaskills.creditapp.core.scoring.GuarantorsCalculator;
-import pl.javaskills.creditapp.core.scoring.IncomeCalculator;
-import pl.javaskills.creditapp.core.scoring.MaritalStatusCalculator;
+import pl.javaskills.creditapp.core.scoring.*;
 import pl.javaskills.creditapp.core.validation.*;
 import pl.javaskills.creditapp.core.validation.reflection.*;
 
@@ -17,13 +20,22 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static pl.javaskills.creditapp.core.DecisionType.*;
 
 class CreditApplicationServiceBDDTest {
     private List<FieldAnnotationProcessor> fieldProcessors = List.of(new NotNullAnnotationProcessor(), new RegexAnnotationProcessor());
     private List<ClassAnnotationProcessor> classProcessors = List.of(new ExactlyOneNotNullAnnotationProcessor());
-    private PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
+    private BikApi bankApiMock = Mockito.mock(BikApi.class);
+    private PersonScoringCalculatorFactory personScoringCalculatorFactory = new PersonScoringCalculatorFactory(new BikScoringCalculator(bankApiMock), new SelfEmployedScoringCalculator(), new EducationCalculator(), new IncomeCalculator(), new MaritalStatusCalculator(), new GuarantorsCalculator());
     private CreditApplicationService cut = new CreditApplicationService(personScoringCalculatorFactory, new CreditRatingCalculator(), new CreditApplicationValidator(new ObjectValidator(fieldProcessors, classProcessors)), new CompoundPostValidator(new ExpensesPostValidator(), new PurposeOfLoanPostValidator()));
+
+    @BeforeEach
+    public void init() {
+        ScoringResponse res = new ScoringResponse();
+        res.setScoring(0);
+        BDDMockito.given(bankApiMock.getScoring(any(ScoringRequest.class))).willReturn(res);
+    }
 
     @Test
     @DisplayName("Should return NEGATIVE_REQUIREMENTS_NOT_MET when scoring is >= 400 and requested loan amount lower than 100000")

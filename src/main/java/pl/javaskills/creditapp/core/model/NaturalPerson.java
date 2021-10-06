@@ -59,4 +59,8 @@ public class NaturalPerson extends Person {
             return new NaturalPerson(pesel, personalData, financeData, contactData, familyMembers);
         }
     }
+
+    public String getPesel() {
+        return pesel;
+    }
 }
